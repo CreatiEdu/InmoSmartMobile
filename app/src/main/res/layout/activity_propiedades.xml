@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <!-- =============================== -->
+        <!-- ENCABEZADO -->
+        <!-- =============================== -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/inmosmart_blue"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="InmoSmart"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <!-- =============================== -->
+        <!-- CONTENIDO PRINCIPAL -->
+        <!-- =============================== -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="25dp"
+            android:paddingTop="45dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="50dp">
+
+
+            <!-- TITULO -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Todas las propiedades"
+                android:textColor="@color/text_dark"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+
+            <!-- ESPACIO -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+
+
+            <!-- =============================== -->
+            <!-- FILTRO TIPO -->
+            <!-- =============================== -->
+
+            <Spinner
+                android:id="@+id/spinnerTipo"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:backgroundTint="@color/border_gray" />
+
+
+            <!-- ESPACIO -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+
+            <!-- =============================== -->
+            <!-- FILTRO LOCALIDAD -->
+            <!-- =============================== -->
+
+            <Spinner
+                android:id="@+id/spinnerLocalidad"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:backgroundTint="@color/border_gray" />
+
+
+            <!-- ESPACIO -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+
+            <!-- =============================== -->
+            <!-- PRECIO -->
+            <!-- =============================== -->
+
+            <EditText
+                android:id="@+id/editPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Precio"
+                android:inputType="number"
+                android:paddingStart="14dp"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+
+        <!-- =============================== -->
+        <!-- FOOTER -->
+        <!-- =============================== -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="572dp"
+            android:background="@color/footer_blue"
+            android:orientation="vertical"
+            android:paddingStart="25dp"
+            android:paddingTop="40dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="25dp">
+
+
+            <!-- =============================== -->
+            <!-- NAVEGACION -->
+            <!-- =============================== -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAVEGACIÓN"
+                android:textColor="#1976D2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Home"
+                android:textColor="#E0E0E0"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="Nosotros"
+                android:textColor="#E0E0E0"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="Contacto"
+                android:textColor="#E0E0E0"
+                android:textSize="15sp" />
+
+
+            <!-- ESPACIO ENTRE SECCIONES -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="35dp" />
+
+
+            <!-- =============================== -->
+            <!-- CONTACTO -->
+            <!-- =============================== -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTACTO"
+                android:textColor="#1976D2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Córdoba, Argentina"
+                android:textColor="#E0E0E0"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="info@inmosmart.com"
+                android:textColor="#E0E0E0"
+                android:textSize="15sp" />
+
+
+            <!-- =============================== -->
+            <!-- LINEA -->
+            <!-- =============================== -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="35dp"
+                android:background="#263B4B" />
+
+
+            <!-- =============================== -->
+            <!-- COPYRIGHT -->
+            <!-- =============================== -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="© 2026 InmoSmart - Todos los derechos reservados."
+                android:textColor="#E0E0E0"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
