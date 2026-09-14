@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav" />
 
     <!-- CONTENIDO CON SCROLL -->
     <ScrollView
@@ -67,6 +67,7 @@
                 android:padding="24dp">
 
                 <TextView
+                    android:id="@+id/tvBannerSaludo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
