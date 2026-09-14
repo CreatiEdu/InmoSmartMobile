@@ -14,6 +14,10 @@ INMOSMART Mobile es una aplicación móvil desarrollada como continuidad del pro
 * Django
 * Django REST Framework
 
+### Frontend
+
+* Android (Java)
+
 ### Base de datos
 
 * MySQL
