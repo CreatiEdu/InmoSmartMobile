@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Colores Base -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="inmosmart_blue">#1A3A6B</color>
+    <color name="footer_blue">#0F2437</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="text_dark">#202124</color>
+    <color name="text_gray">#555555</color>
+
+    <color name="border_gray">#D9D9D9</color>
+    <color name="button_blue">#1976D2</color>
 
 
     <!-- Paleta para nuestra app -->
@@ -12,6 +22,7 @@
     <color name="gris_fondo_input">#F4F6F9</color>
     <color name="gris_borde_inmput">#CBDSE1</color>
     <color name="texto_principal">#334155</color>
+
 </resources>
 
 
