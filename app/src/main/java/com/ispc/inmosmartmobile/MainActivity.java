@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_buscar) {
                 // Lógica de búsqueda
+                Intent intent = new Intent(MainActivity.this, ActivityPropiedades.class);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.nav_menu) {
                 return true;
