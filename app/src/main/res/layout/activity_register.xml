@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="@color/white">
+
+    <TextView android:text="Registrar Usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:textColor="@color/texto_principal"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <EditText android:id="@+id/boxUsuario"
+        android:hint="Nombre de usuario"
+        android:inputType="textPersonName"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="16dp"
+        android:padding="16dp"
+        android:background="@drawable/input_fondo"
+        android:textColor="@color/texto_principal"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/boxDni"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/input_fondo"
+        android:hint="DNI"
+        android:inputType="number"
+        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:textColor="@color/texto_principal" />
+
+    <EditText android:id="@+id/boxEmail"
+        android:inputType="textEmailAddress"
+        android:hint="Correo Electronico"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="16dp"
+        android:padding="16dp"
+        android:background="@drawable/input_fondo"
+        android:textColor="@color/texto_principal"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText android:id="@+id/boxPassword"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="16dp"
+        android:padding="16dp"
+        android:background="@drawable/input_fondo"
+        android:textColor="@color/texto_principal"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText android:id="@+id/boxPasswordAgain"
+        android:hint="Reingresar Contraseña"
+        android:inputType="textPassword"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="16dp"
+        android:padding="16dp"
+        android:background="@drawable/input_fondo"
+        android:textColor="@color/texto_principal"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegister"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/boton_redondeado"
+
+        android:text="Registrarse"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogin"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/boton_redondeado"
+        android:text="Iniciar Sesion"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
+

@@ -15,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsuario;
     private EditText etPassword;
     private Button btnLogin;
+    private Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsuario = findViewById(R.id.etUsuario);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         // Escuchar el evento de click del botón
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +59,14 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT
                     ).show();
                 }
+            }
+        });
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    // Crear Intent para ir a RegisterActivity
+                    Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                    startActivity(intent);
             }
         });
     }
