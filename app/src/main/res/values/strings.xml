@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">InmoSmartMobile</string>
+
+    <string name="app_name">INMOSMART</string>
+
+    <string name="contacto">Contacto</string>
+    <string name="contacto_descripcion">Comunicate con INMOSMART para consultas y asesoramiento.</string>
+
+    <string name="tu_nombre">Tu nombre</string>
+    <string name="tu_telefono">Tu teléfono</string>
+    <string name="tu_email">Tu email</string>
+    <string name="asunto">Asunto</string>
+    <string name="escribi_mensaje">Escribí tu mensaje</string>
+    <string name="enviar">Enviar</string>
+
+    <string name="informacion_contacto">Información de contacto</string>
+
+    <string name="direccion"> Dirección</string>
+    <string name="cordoba_argentina">Córdoba, Argentina</string>
+
+    <string name="telefono"> Teléfono</string>
+    <string name="numero_telefono">351-123456</string>
+
+    <string name="email"> Email</string>
+    <string name="email_contacto">contacto@inmosmart.com</string>
+
 </resources>
