@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_buscar) {
                 // Lógica de búsqueda
+                Intent intent = new Intent(MainActivity.this, ActivityPropiedades.class);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.nav_menu) {
                 return true;
@@ -57,10 +59,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Método que despliega las opciones de "Mi perfil" y "Sobre nosotros"
+    // Método que despliega las opciones del menú emergente
     private void mostrarMenuDesplegable(View anchorView) {
         PopupMenu popup = new PopupMenu(MainActivity.this, anchorView);
         popup.getMenuInflater().inflate(R.menu.menu_mas, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(menuItem -> {
+            int itemId = menuItem.getItemId();
+
+            if (itemId == R.id.sub_nosotros) {
+                // Prueba para verificar que entra al clic
+                Toast.makeText(MainActivity.this, "Clic en Quiénes Somos", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MainActivity.this, QuienesSomosActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+            return false;
+        });
+
         popup.show();
     }
 }
