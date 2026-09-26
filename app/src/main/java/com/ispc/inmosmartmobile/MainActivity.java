@@ -2,17 +2,24 @@ package com.ispc.inmosmartmobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import androidx.viewpager2.widget.ViewPager2;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvBannerSaludo;
     private BottomNavigationView bottomNavigation;
+    private ViewPager2 viewPagerCarrusel;
+    private Handler carruselHandler;
+    private Runnable carruselRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
         // Enlaza componentes con los ID del XML
         tvBannerSaludo = findViewById(R.id.tvBannerSaludo);
         bottomNavigation = findViewById(R.id.bottomNavigation);
+        viewPagerCarrusel = findViewById(R.id.viewPagerCarrusel);
+
+        // Configuración del carrusel con imágenes
+        List<Integer> imagenesCarrusel = new ArrayList<>();
+        imagenesCarrusel.add(R.drawable.casa5);
+        imagenesCarrusel.add(R.drawable.casa1);
+        imagenesCarrusel.add(R.drawable.casa2);
+        imagenesCarrusel.add(R.drawable.casa4);
+
+        viewPagerCarrusel.setAdapter(new SliderAdapter(imagenesCarrusel));
+        iniciarAutoScroll(imagenesCarrusel.size());
 
         // Recibimos los datos enviados desde LoginActivity
         String usuario = getIntent().getStringExtra("Extra_USUARIO");
@@ -57,6 +75,29 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    // Hace que el carrusel avance solo cada 3 segundos
+    private void iniciarAutoScroll(int cantidadImagenes) {
+        carruselHandler = new Handler();
+        carruselRunnable = new Runnable() {
+            @Override
+            public void run() {
+                int siguiente = (viewPagerCarrusel.getCurrentItem() + 1) % cantidadImagenes;
+                viewPagerCarrusel.setCurrentItem(siguiente, true);
+                carruselHandler.postDelayed(this, 3000);
+            }
+        };
+        carruselHandler.postDelayed(carruselRunnable, 3000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Evita que el Runnable siga ejecutándose si la Activity ya no existe
+        if (carruselHandler != null && carruselRunnable != null) {
+            carruselHandler.removeCallbacks(carruselRunnable);
+        }
     }
 
     // Método que despliega las opciones del menú emergente
