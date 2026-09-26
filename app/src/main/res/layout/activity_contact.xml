@@ -221,10 +221,46 @@
 
         </LinearLayout>
 
+        <!-- mapa -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nuestra ubicación"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:textColor="#1F3F77"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="12dp">
+
+            <WebView
+                android:id="@+id/webViewMapa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ProgressBar
+                android:id="@+id/progressMapa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="#1F3F77" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btnComoLlegar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#1F3F77"
+            android:text="Cómo llegar"
+            android:textColor="#FFFFFF" />
 
         <!--  Footer  -->
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
