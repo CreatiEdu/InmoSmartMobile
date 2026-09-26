@@ -59,6 +59,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="24dp">
+            <!-- carrusel -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerCarrusel"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
             <!-- SECCIÓN 1: Banner Institucional -->
             <LinearLayout
