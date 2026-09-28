@@ -4,13 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- BARRA SUPERIOR (HEADER) -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:background="@color/inmosmart_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="InmoSmart"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toTopOf="@id/btnQuienesSomos"
+        android:background="@color/white"
+        app:itemIconTint="@color/inmosmart_blue"
+        app:itemTextColor="@color/inmosmart_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav" />
@@ -32,11 +58,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="24dp">
+
             <!-- carrusel -->
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPagerCarrusel"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
+
+            <!-- Indicador del carrusel -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:elevation="0dp"
+                android:background="@android:color/transparent"
+                app:tabBackground="@drawable/tab_selector_dot"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabMinWidth="16dp"
+                app:tabMaxWidth="16dp"
+                app:tabPaddingStart="2dp"
+                app:tabPaddingEnd="2dp" />
 
             <!-- SECCIÓN 1: Banner Institucional -->
             <LinearLayout
@@ -53,7 +97,7 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="Somos un estudio inmobiliario diferente.\nFamiliar y personalizado."
-                    android:textColor="#222222"
+                    android:textColor="@color/texto_banner"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -62,17 +106,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Aquí comienza tu nuevo hogar"
-                    android:textColor="#666666"
+                    android:textColor="@color/text_gray"
                     android:textSize="14sp" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
-                    android:backgroundTint="#1D70B8"
+                    android:backgroundTint="@color/button_blue"
                     android:text="Ver propiedades"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <!-- SECCIÓN 2: Título Opciones -->
@@ -82,7 +126,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:text="ENCUENTRA TUS PROPIEDADES"
-                android:textColor="#888888"
+                android:textColor="@color/texto_terciario"
                 android:textSize="11sp" />
 
             <TextView
@@ -91,7 +135,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
                 android:text="Explora nuestras opciones"
-                android:textColor="#111111"
+                android:textColor="@color/texto_principal"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -124,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Casas en venta"
-                        android:textColor="#333333"
+                        android:textColor="@color/texto_tarjeta"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -132,10 +176,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="#1D70B8"
+                        android:backgroundTint="@color/button_blue"
                         android:text="Ver propiedades"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -169,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Lotes y terrenos en venta"
-                        android:textColor="#333333"
+                        android:textColor="@color/texto_tarjeta"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -177,10 +221,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="#1D70B8"
+                        android:backgroundTint="@color/button_blue"
                         android:text="Ver propiedades"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -214,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Alquileres"
-                        android:textColor="#333333"
+                        android:textColor="@color/texto_tarjeta"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -222,10 +266,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="#1D70B8"
+                        android:backgroundTint="@color/button_blue"
                         android:text="Ver propiedades"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -234,7 +278,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#0A2240"
+                android:background="@color/footer_blue"
                 android:orientation="vertical"
                 android:padding="24dp">
 
@@ -242,7 +286,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="INMOSMART"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -252,14 +296,14 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
                     android:text="Conectamos personas con su próximo hogar."
-                    android:textColor="#B0BEC5"
+                    android:textColor="@color/footer_texto"
                     android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CONTACTO"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -269,7 +313,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
                     android:text="Córdoba, Argentina\ninfo@inmosmart.com"
-                    android:textColor="#B0BEC5"
+                    android:textColor="@color/footer_texto"
                     android:textSize="12sp" />
 
                 <TextView
@@ -278,7 +322,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
                     android:text="Copyright 2026 InmoSmart - Todos los derechos reservados"
-                    android:textColor="#78909C"
+                    android:textColor="@color/footer_texto_claro"
                     android:textSize="10sp" />
             </LinearLayout>
 
@@ -289,10 +333,12 @@
         android:id="@+id/btnQuienesSomos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_blue"
         android:text="Ver Quiénes Somos"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        android:layout_marginBottom="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

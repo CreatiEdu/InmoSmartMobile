@@ -8,7 +8,15 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="32dp"
-    android:background="@color/white">
+    android:background="@drawable/fondo_abstracto">
+
+    <!-- Logo -->
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo"
+        android:contentDescription="Logo de la app"
+        android:layout_marginBottom="16dp"/>
 
     <!-- Titulo Principal -->
     <TextView
@@ -16,7 +24,7 @@
         android:layout_height="wrap_content"
 
         android:text="Iniciar Sesión"
-        android:textColor="@color/texto_principal"
+        android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
 
@@ -59,7 +67,6 @@
         android:layout_marginBottom="24dp"/>
 
     <!-- Boton de ingreso -->
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
 
@@ -71,6 +78,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
 
+        android:layout_marginBottom="12dp"
         android:background="@drawable/boton_redondeado"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -85,5 +93,11 @@
         android:textSize="16sp"
 
         android:textStyle="bold" />
-</LinearLayout>
 
+    <!-- Espacio flexible que empuja el contenido hacia arriba -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
