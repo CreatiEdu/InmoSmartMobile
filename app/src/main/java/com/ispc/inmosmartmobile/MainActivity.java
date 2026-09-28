@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvBannerSaludo;
     private BottomNavigationView bottomNavigation;
     private ViewPager2 viewPagerCarrusel;
+    private TabLayout tabIndicator;
     private Handler carruselHandler;
     private Runnable carruselRunnable;
 
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         tvBannerSaludo = findViewById(R.id.tvBannerSaludo);
         bottomNavigation = findViewById(R.id.bottomNavigation);
         viewPagerCarrusel = findViewById(R.id.viewPagerCarrusel);
+        tabIndicator = findViewById(R.id.tabIndicator);
 
         // Configuración del carrusel con imágenes
         List<Integer> imagenesCarrusel = new ArrayList<>();
@@ -39,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         imagenesCarrusel.add(R.drawable.casa4);
 
         viewPagerCarrusel.setAdapter(new SliderAdapter(imagenesCarrusel));
+
+        // Conecta el indicador de puntos con el carrusel
+        new TabLayoutMediator(tabIndicator, viewPagerCarrusel, (tab, position) -> {
+        }).attach();
+
         iniciarAutoScroll(imagenesCarrusel.size());
 
         // Recibimos los datos enviados desde LoginActivity
