@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -12,11 +11,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <!-- =============================== -->
         <!-- ENCABEZADO -->
         <!-- =============================== -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -34,98 +31,112 @@
 
         </LinearLayout>
 
-
         <!-- =============================== -->
         <!-- CONTENIDO PRINCIPAL -->
         <!-- =============================== -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="25dp"
-            android:paddingTop="45dp"
+            android:paddingTop="30dp"
             android:paddingEnd="25dp"
-            android:paddingBottom="50dp">
-
+            android:paddingBottom="30dp">
 
             <!-- TITULO -->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Todas las propiedades"
                 android:textColor="@color/text_dark"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:textStyle="bold" />
-
-
-            <!-- ESPACIO -->
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="25dp" />
+                android:layout_height="20dp" />
 
-
-            <!-- =============================== -->
-            <!-- FILTRO TIPO -->
-            <!-- =============================== -->
-
+            <!-- FILTRO TIPO DE OPERACION -->
             <Spinner
                 android:id="@+id/spinnerTipo"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:backgroundTint="@color/border_gray" />
 
-
-            <!-- ESPACIO -->
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="16dp" />
 
-
-            <!-- =============================== -->
-            <!-- FILTRO LOCALIDAD -->
-            <!-- =============================== -->
-
-            <Spinner
-                android:id="@+id/spinnerLocalidad"
+            <!-- FILTRO LOCALIDAD / CIUDAD -->
+            <EditText
+                android:id="@+id/etCiudad"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:backgroundTint="@color/border_gray" />
-
-
-            <!-- ESPACIO -->
+                android:hint="Ciudad (ej. Córdoba)"
+                android:inputType="text"
+                android:paddingStart="14dp"
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="16dp" />
 
-
-            <!-- =============================== -->
-            <!-- PRECIO -->
-            <!-- =============================== -->
-
+            <!-- FILTRO PRECIO -->
             <EditText
                 android:id="@+id/editPrecio"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:hint="Precio"
-                android:inputType="number"
+                android:hint="Precio Máximo ($)"
+                android:inputType="numberDecimal"
                 android:paddingStart="14dp"
                 android:textSize="15sp" />
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
+            <!-- BOTÓN DE BÚSQUEDA -->
+            <Button
+                android:id="@+id/btnBuscar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:backgroundTint="@color/inmosmart_blue"
+                android:text="Buscar Inmuebles"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <!-- MENSAJE DE SIN RESULTADOS (Criterio de Aceptación) -->
+            <TextView
+                android:id="@+id/tvSinResultados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="No se encontraron inmuebles con los criterios seleccionados"
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <!-- LISTA DE INMUEBLES -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvInmuebles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+        </LinearLayout>
 
         <!-- =============================== -->
         <!-- FOOTER -->
         <!-- =============================== -->
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="572dp"
+            android:layout_height="wrap_content"
             android:background="@color/footer_blue"
             android:orientation="vertical"
             android:paddingStart="25dp"
@@ -133,11 +144,7 @@
             android:paddingEnd="25dp"
             android:paddingBottom="25dp">
 
-
-            <!-- =============================== -->
-            <!-- NAVEGACION -->
-            <!-- =============================== -->
-
+            <!-- NAVEGACIÓN -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -170,18 +177,11 @@
                 android:textColor="#E0E0E0"
                 android:textSize="15sp" />
 
-
-            <!-- ESPACIO ENTRE SECCIONES -->
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="35dp" />
 
-
-            <!-- =============================== -->
             <!-- CONTACTO -->
-            <!-- =============================== -->
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -206,22 +206,13 @@
                 android:textColor="#E0E0E0"
                 android:textSize="15sp" />
 
-
-            <!-- =============================== -->
-            <!-- LINEA -->
-            <!-- =============================== -->
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="35dp"
                 android:background="#263B4B" />
 
-
-            <!-- =============================== -->
             <!-- COPYRIGHT -->
-            <!-- =============================== -->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
