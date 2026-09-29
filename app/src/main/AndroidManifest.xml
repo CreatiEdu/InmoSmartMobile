@@ -14,14 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InmoSmartMobile"
         tools:targetApi="31">
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="true" />
 
-        <activity android:name=".contact"/>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".contact" />
 
         <activity
             android:name=".SplashActivity"
@@ -33,19 +29,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".QuienesSomosActivity"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-        </activity>
-
-        <activity
-            android:name=".ActivityPropiedades"
-            android:exported="true">
-        </activity>
+        <activity android:name=".QuienesSomosActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ActivityPropiedades" />
 
     </application>
 
