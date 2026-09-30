@@ -111,6 +111,7 @@
                     android:textSize="14sp" />
 
                 <Button
+                    android:id="@+id/btnVerPropiedades"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
@@ -174,6 +175,7 @@
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/btnVerCasas"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
@@ -219,6 +221,7 @@
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/btnVerLotes"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
@@ -264,6 +267,7 @@
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/btnVerAlquileres"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
@@ -329,17 +333,5 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btnQuienesSomos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_blue"
-        android:text="Ver Quiénes Somos"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
