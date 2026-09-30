@@ -51,6 +51,8 @@
     <!-- Campo de contraseña -->
     <EditText
         android:id="@+id/etPassword"
+        android:drawableEnd="@drawable/ic_visibility"
+        android:drawablePadding="8dp"
 
         android:layout_width="match_parent"
         android:layout_height="50dp"
