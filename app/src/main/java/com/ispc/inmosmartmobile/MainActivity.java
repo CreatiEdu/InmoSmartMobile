@@ -125,6 +125,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             }
+            if (itemId == R.id.sub_perfil) {
+                // Prueba para verificar que entra al clic
+                Toast.makeText(MainActivity.this, "Clic en Quiénes Somos", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                return true;
+            }
 
             return false;
         });
