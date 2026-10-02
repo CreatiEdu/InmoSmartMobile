@@ -1,7 +1,12 @@
 package com.ispc.inmosmartmobile;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnRegister;
 
+    private boolean passwordVisible = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
+
+        // Ojito para mostrar/ocultar la contraseña
+        configurarOjoPassword();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +61,40 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void configurarOjoPassword() {
+        etPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Drawable iconoFinal = etPassword.getCompoundDrawablesRelative()[2];
+                    if (iconoFinal != null) {
+                        int limite = etPassword.getWidth()
+                                - etPassword.getPaddingEnd()
+                                - iconoFinal.getBounds().width()
+                                - etPassword.getCompoundDrawablePadding();
+
+                        if (event.getX() >= limite) {
+                            if (passwordVisible) {
+                                // Ocultar contraseña
+                                etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_visibility, 0);
+                            } else {
+                                // Mostrar contraseña
+                                etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_off, 0);
+                            }
+                            passwordVisible = !passwordVisible;
+                            etPassword.setSelection(etPassword.getText().length()); // cursor al final
+                            return true;
+                        }
+                    }
+                }
+                return false;
             }
         });
     }

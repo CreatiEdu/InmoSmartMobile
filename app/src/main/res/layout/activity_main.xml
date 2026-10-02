@@ -222,6 +222,7 @@
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/btnVerCasas"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
@@ -274,6 +275,7 @@
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/btnVerLotes"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
@@ -326,6 +328,7 @@
                         android:textStyle="bold" />
 
                     <Button
+                        android:id="@+id/btnVerAlquileres"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
