@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -43,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     String usuario = boxUsuario.getText().toString().trim();
-                    String dni = boxDni.toString();
+                    String dni = boxDni.getText().toString().trim();
                     String email = boxEmail.getText().toString().trim();
                     String password = boxPassword.getText().toString().trim();
                     String passwordAgain = boxPasswordAgain.getText().toString().trim();
@@ -51,17 +53,12 @@ public class RegisterActivity extends AppCompatActivity {
                     // Validar que los campos no estén vacíos
                     if (!usuario.isEmpty() && !password.isEmpty() && !dni.isEmpty() && !email.isEmpty() && !passwordAgain.isEmpty()) {
 
-                        // Crear Intent para ir a MainActivity
-                        Intent intent = new Intent(com.ispc.inmosmartmobile.RegisterActivity.this, LoginActivity.class);
+                        if (!password.equals(passwordAgain)){
+                            Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                        startActivity(intent);
-                        Toast.makeText(
-                        com.ispc.inmosmartmobile.RegisterActivity.this,
-                        "Solicitud de Registro Enviada",
-                        Toast.LENGTH_SHORT
-                        ).show();
-                        // Cierra la pantalla de Register al ingresar
-                        finish();
+                        ejecutarRegistro(usuario, dni, email, password );
 
                     } else {
                         // Mostrar mensaje de advertencia
@@ -81,6 +78,33 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent);
                     /* Cierra la pantalla de Login al ingresar */
                     finish();
+                }
+            });
+        }
+
+        private void ejecutarRegistro(String usuario, String dni, String email, String password){
+            ApiService apiService = ApiClient.getApiService();
+            RegisterRequest registerRequest = new RegisterRequest(usuario, dni, email, password);
+
+            Call<RegisterResponse> call = apiService.register(registerRequest);
+            call.enqueue(new Callback<RegisterResponse>() {
+                @Override
+                public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                    if (response.isSuccessful() && response.body() != null){
+                        Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        intent.putExtra("Extra_USUARIO", usuario);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Error al registrar usuario:" + response.code(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                    Toast.makeText(RegisterActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
