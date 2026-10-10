@@ -10,8 +10,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class contact extends AppCompatActivity {
 
@@ -43,7 +47,6 @@ public class contact extends AppCompatActivity {
         progressMapa = findViewById(R.id.progressMapa);
 
         // Configuración del mapa embebido de Google Maps (dentro de un iframe real)
-
         webViewMapa.getSettings().setJavaScriptEnabled(true);
         String htmlMapa = "<html><body style='margin:0;padding:0;'>" +
                 "<iframe width='100%' height='100%' frameborder='0' style='border:0' " +
@@ -67,43 +70,67 @@ public class contact extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 2. Escuchar el evento de clic del botón Enviar
-        btnEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // 2. Enviar el formulario al backend
+        btnEnviar.setOnClickListener(v -> {
 
-                // Obtener el texto ingresado en cada campo y quitar espacios extras
-                String nombre = edtNombre.getText().toString().trim();
-                String telefono = edtTelefono.getText().toString().trim();
-                String email = edtEmail.getText().toString().trim();
-                String asunto = edtAsunto.getText().toString().trim();
-                String mensaje = edtMensaje.getText().toString().trim();
+            String nombre = edtNombre.getText().toString().trim();
+            String telefono = edtTelefono.getText().toString().trim();
+            String email = edtEmail.getText().toString().trim();
+            String asunto = edtAsunto.getText().toString().trim();
+            String mensaje = edtMensaje.getText().toString().trim();
 
-                // Validar que NINGÚN campo esté vacío
-                if (!nombre.isEmpty() && !telefono.isEmpty() && !email.isEmpty()
-                        && !asunto.isEmpty() && !mensaje.isEmpty()) {
-
-                    // Acción cuando la validación es correcta
-                    Toast.makeText(
-                            contact.this,
-                            "¡Mensaje enviado con éxito!",
-                            Toast.LENGTH_LONG
-                    ).show();
-
-                    // Limpiar las casillas de texto después de enviar
-                    limpiarCampos();
-
-                } else {
-
-                    // Advertencia si falta llenar algún campo
-                    Toast.makeText(
-                            contact.this,
-                            "Por favor complete todos los campos",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
+            // Validar que NINGÚN campo esté vacío
+            if (nombre.isEmpty() || telefono.isEmpty() || email.isEmpty()
+                    || asunto.isEmpty() || mensaje.isEmpty()) {
+                Toast.makeText(contact.this,
+                        "Por favor complete todos los campos",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                edtEmail.setError("Email inválido");
+                return;
+            }
+
+            enviarContacto(new ContactoRequest(nombre, telefono, email, asunto, mensaje));
         });
+    }
+
+    // Envía el mensaje al backend (POST api/contacto/)
+    private void enviarContacto(ContactoRequest body) {
+        btnEnviar.setEnabled(false);
+
+        ApiClient.getApiService().enviarContacto(body)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        btnEnviar.setEnabled(true);
+                        if (response.isSuccessful()) {
+                            Toast.makeText(contact.this,
+                                    "¡Mensaje enviado con éxito!",
+                                    Toast.LENGTH_LONG).show();
+                            limpiarCampos();
+                        } else {
+                            String cuerpo = "";
+                            try {
+                                if (response.errorBody() != null) cuerpo = response.errorBody().string();
+                            } catch (Exception ignored) {}
+                            android.util.Log.e("CONTACTO", "HTTP " + response.code() + " -> " + cuerpo);
+                            Toast.makeText(contact.this,
+                                    "Error al enviar (código " + response.code() + ")",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        btnEnviar.setEnabled(true);
+                        Toast.makeText(contact.this,
+                                "Error de conexión: " + t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     // Método auxiliar para resetear los EditText
