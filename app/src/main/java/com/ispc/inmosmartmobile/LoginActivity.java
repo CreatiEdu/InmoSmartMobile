@@ -2,6 +2,7 @@ package com.ispc.inmosmartmobile;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -108,6 +109,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
+
+                    // Guardar el token para usarlo en el perfil
+                    SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
+                    prefs.edit()
+                            .putString("token", loginResponse.getToken())
+                            .putInt("id", loginResponse.getId())
+                            .apply();
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("Extra_USUARIO", loginResponse.getNombre());
