@@ -22,4 +22,7 @@ public interface ApiService {
     @PUT("perfil/")
     Call<PerfilResponse> actualizarPerfil(@Header("Authorization") String token,
                                           @Body PerfilRequest perfilRequest);
+
+    @POST("contacto/")
+    Call<ResponseBody> enviarContacto(@Body ContactoRequest body);
 }
