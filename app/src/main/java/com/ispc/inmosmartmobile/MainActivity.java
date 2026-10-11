@@ -176,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             }
+            if (itemId == R.id.sub_favoritos) {
+                Intent intent = new Intent(MainActivity.this, FavoritosActivity.class);
+                startActivity(intent);
+                return true;
+            }
 
             return false;
         });
