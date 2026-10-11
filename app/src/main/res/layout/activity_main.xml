@@ -32,16 +32,38 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- Saludo usuario -->
-            <TextView
-                android:id="@+id/tvUsuarioBienvenido"
+            <!-- Saludo usuario + circulo con la inicial -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:textColor="#E0E0E0"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvUsuarioBienvenido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:maxWidth="140dp"
+                    android:textColor="#E0E0E0"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvInicialUsuario"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:contentDescription="Perfil de usuario"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </RelativeLayout>
 
 
@@ -343,6 +365,7 @@
             </androidx.cardview.widget.CardView>
 
             <!-- SECCIÓN 3: Footer Oscuro -->
+            <!-- SECCIÓN 3: Footer -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -350,13 +373,27 @@
                 android:orientation="vertical"
                 android:padding="24dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="INMOSMART"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_home_logo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="INMOSMART"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -365,7 +402,7 @@
                     android:layout_marginBottom="16dp"
                     android:text="Conectamos personas con su próximo hogar."
                     android:textColor="@color/footer_texto"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -380,15 +417,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
+                    android:lineSpacingMultiplier="1.3"
                     android:text="Córdoba, Argentina\ninfo@inmosmart.com"
                     android:textColor="@color/footer_texto"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEscribinos"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Escribinos"
+                    android:textAllCaps="false"
+                    android:textColor="@color/footer_blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="26dp"
+                    app:icon="@drawable/contact_support"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/footer_blue" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="Copyright 2026 InmoSmart - Todos los derechos reservados"
                     android:textColor="@color/footer_texto_claro"
                     android:textSize="10sp" />
