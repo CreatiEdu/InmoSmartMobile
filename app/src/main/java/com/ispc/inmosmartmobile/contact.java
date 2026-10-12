@@ -32,8 +32,8 @@ public class contact extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact); // Vincula con tu XML de contacto
+        super.onCreate(savedInstanceState);
 
         // 1. Enlazar componentes Java con sus ID en el XML
         edtNombre = findViewById(R.id.edtNombre);
@@ -41,7 +41,25 @@ public class contact extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtAsunto = findViewById(R.id.edtAsunto);
         edtMensaje = findViewById(R.id.edtMensaje);
-        btnEnviar = findViewById(R.id.btnEnviar);
+        btnEnviar.setOnClickListener(v -> {
+            if (!validarFormulario()) return;
+
+            String nombre   = edtNombre.getText().toString().trim();
+            String telefono = edtTelefono.getText().toString().replaceAll("[\\s().-]", ""); // normalizado
+            String email    = edtEmail.getText().toString().trim().toLowerCase();
+            String asunto   = edtAsunto.getText().toString().trim();
+            String mensaje  = edtMensaje.getText().toString().trim();
+
+            enviarContacto(new ContactoRequest(nombre, telefono, email, asunto, mensaje));
+        });
+
+// Borra el error apenas el usuario corrige el campo
+        agregarLimpiadorDeError(edtNombre);
+        agregarLimpiadorDeError(edtTelefono);
+        agregarLimpiadorDeError(edtEmail);
+        agregarLimpiadorDeError(edtAsunto);
+        agregarLimpiadorDeError(edtMensaje);
+
         webViewMapa = findViewById(R.id.webViewMapa);
         btnComoLlegar = findViewById(R.id.btnComoLlegar);
         progressMapa = findViewById(R.id.progressMapa);
@@ -94,6 +112,77 @@ public class contact extends AppCompatActivity {
             }
 
             enviarContacto(new ContactoRequest(nombre, telefono, email, asunto, mensaje));
+        });
+    }
+
+    private boolean validarFormulario() {
+        String nombre   = edtNombre.getText().toString().trim();
+        String telefono = edtTelefono.getText().toString().trim();
+        String email    = edtEmail.getText().toString().trim();
+        String asunto   = edtAsunto.getText().toString().trim();
+        String mensaje  = edtMensaje.getText().toString().trim();
+
+        EditText primerError = null;
+
+        // Nombre: solo letras, espacios, apóstrofes, puntos y guiones (2 a 60 caracteres)
+        if (nombre.isEmpty()) {
+            edtNombre.setError("Ingresá tu nombre");
+            primerError = edtNombre;
+        } else if (!nombre.matches("^\\p{L}[\\p{L} '.-]{1,59}$")) {
+            edtNombre.setError("Nombre inválido (solo letras, entre 2 y 60 caracteres)");
+            primerError = edtNombre;
+        }
+
+        // Teléfono: opcional "+", luego 8 a 15 dígitos (se ignoran espacios, guiones y paréntesis)
+        String telLimpio = telefono.replaceAll("[\\s().-]", "");
+        if (telefono.isEmpty()) {
+            edtTelefono.setError("Ingresá tu teléfono");
+            if (primerError == null) primerError = edtTelefono;
+        } else if (!telLimpio.matches("^\\+?\\d{8,15}$")) {
+            edtTelefono.setError("Teléfono inválido (entre 8 y 15 dígitos)");
+            if (primerError == null) primerError = edtTelefono;
+        }
+
+        // Email
+        if (email.isEmpty()) {
+            edtEmail.setError("Ingresá tu email");
+            if (primerError == null) primerError = edtEmail;
+        } else if (email.length() > 254
+                || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            edtEmail.setError("Email inválido");
+            if (primerError == null) primerError = edtEmail;
+        }
+
+        // Asunto: 3 a 100 caracteres
+        if (asunto.length() < 3) {
+            edtAsunto.setError("El asunto debe tener al menos 3 caracteres");
+            if (primerError == null) primerError = edtAsunto;
+        } else if (asunto.length() > 100) {
+            edtAsunto.setError("El asunto no puede superar los 100 caracteres");
+            if (primerError == null) primerError = edtAsunto;
+        }
+
+        // Mensaje: 10 a 1000 caracteres
+        if (mensaje.length() < 10) {
+            edtMensaje.setError("El mensaje debe tener al menos 10 caracteres");
+            if (primerError == null) primerError = edtMensaje;
+        } else if (mensaje.length() > 1000) {
+            edtMensaje.setError("El mensaje no puede superar los 1000 caracteres");
+            if (primerError == null) primerError = edtMensaje;
+        }
+
+        if (primerError != null) {
+            primerError.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private void agregarLimpiadorDeError(EditText campo) {
+        campo.addTextChangedListener(new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            @Override public void onTextChanged(CharSequence s, int st, int b, int c) {}
+            @Override public void afterTextChanged(android.text.Editable s) { campo.setError(null); }
         });
     }
 

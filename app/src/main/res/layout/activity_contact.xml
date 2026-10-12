@@ -61,21 +61,24 @@
                 android:id="@+id/edtNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:hint="@string/tu_nombre"
-                android:inputType="textPersonName"
                 android:padding="14dp"
-                android:layout_marginBottom="15dp" />
+                android:textColorHint="@color/black"
+                android:inputType="textPersonName|textCapWords"
+                android:maxLength="60"/>
 
 
             <EditText
                 android:id="@+id/edtTelefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:hint="@string/tu_telefono"
                 android:inputType="phone"
+                android:maxLength="20
                 android:padding="14dp"
-                android:layout_marginBottom="15dp" />
-
+                android:textColorHint="@color/black" />
 
             <EditText
                 android:id="@+id/edtEmail"
@@ -84,17 +87,21 @@
                 android:layout_marginBottom="15dp"
                 android:hint="@string/tu_email"
                 android:inputType="textEmailAddress"
-                android:padding="14dp" />
+                android:maxLength="254"
+                android:padding="14dp"
+                android:textColorHint="@color/black" />
 
 
             <EditText
                 android:id="@+id/edtAsunto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:hint="@string/asunto"
-                android:inputType="text"
+                android:inputType="text|textCapSentences"
+                android:maxLength="100"
                 android:padding="14dp"
-                android:layout_marginBottom="15dp" />
+                android:textColorHint="@color/black" />
 
 
             <!-- dato de contacto-->
@@ -107,8 +114,10 @@
                 android:layout_marginBottom="15dp"
                 android:gravity="top"
                 android:hint="@string/escribi_mensaje"
-                android:inputType="textMultiLine"
-                android:padding="14dp" />
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLength="1000"
+                android:padding="14dp"
+                android:textColorHint="@color/black" />
 
             <Button
                 android:id="@+id/btnEnviar"
