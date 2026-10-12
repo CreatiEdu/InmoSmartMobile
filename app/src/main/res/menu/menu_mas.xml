@@ -6,6 +6,10 @@
         android:title="Mi perfil" />
 
     <item
+        android:id="@+id/sub_favoritos"
+        android:title="Favoritos" />
+
+    <item
         android:id="@+id/sub_nosotros"
         android:title="Sobre nosotros" />
 

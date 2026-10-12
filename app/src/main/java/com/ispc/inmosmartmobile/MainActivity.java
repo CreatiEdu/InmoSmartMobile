@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tvBannerSaludo;
     private TextView tvUsuarioBienvenido;
+    private TextView tvInicialUsuario;
     private BottomNavigationView bottomNavigation;
     private ViewPager2 viewPagerCarrusel;
     private TabLayout tabIndicator;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         // Enlaza componentes con los ID del XML
         tvBannerSaludo = findViewById(R.id.tvBannerSaludo);
         tvUsuarioBienvenido = findViewById(R.id.tvUsuarioBienvenido);
+        tvInicialUsuario = findViewById(R.id.tvInicialUsuario);
         bottomNavigation = findViewById(R.id.bottomNavigation);
         viewPagerCarrusel = findViewById(R.id.viewPagerCarrusel);
         tabIndicator = findViewById(R.id.tabIndicator);
@@ -69,11 +71,18 @@ public class MainActivity extends AppCompatActivity {
         // Recibimos los datos enviados desde LoginActivity
         String usuario = getIntent().getStringExtra("Extra_USUARIO");
 
-        if (usuario != null && !usuario.isEmpty()) {
+        if (usuario != null && !usuario.trim().isEmpty()) {
             tvUsuarioBienvenido.setText("¡Hola, " + usuario + "!");
+            // Círculo con la inicial del usuario
+            tvInicialUsuario.setText(usuario.trim().substring(0, 1).toUpperCase());
         } else {
             tvUsuarioBienvenido.setText("¡Bienvenido/a!");
+            tvInicialUsuario.setText("?");
         }
+
+        // Clic en el círculo con la inicial: abre el perfil
+        tvInicialUsuario.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
 
         // --- CLICS DE BÚSQUEDA Y OPCIONES ---
 
@@ -110,6 +119,13 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("CATEGORIA", "Alquileres");
                 startActivity(intent);
             });
+        }
+
+        // Botón "Escribinos" del footer: abre la pantalla de contacto
+        View btnEscribinos = findViewById(R.id.btnEscribinos);
+        if (btnEscribinos != null) {
+            btnEscribinos.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, contact.class)));
         }
 
         // Configuración de clics en el menú inferior
@@ -173,6 +189,11 @@ public class MainActivity extends AppCompatActivity {
             }
             if (itemId == R.id.sub_perfil) {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            if (itemId == R.id.sub_favoritos) {
+                Intent intent = new Intent(MainActivity.this, FavoritosActivity.class);
                 startActivity(intent);
                 return true;
             }
