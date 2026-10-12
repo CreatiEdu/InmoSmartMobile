@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface InmueblesApi {
-    @GET("propiedades")
+    @GET("api/mobile/propiedades/")
     Call<List<Inmueble>> getInmueblesFiltrados(
             @Query("tipoOperacion") String tipoOperacion,
             @Query("ciudad") String ciudad,

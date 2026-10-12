@@ -28,8 +28,16 @@ public class InmueblesAdapter extends RecyclerView.Adapter<InmueblesAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Inmueble inmueble = listaInmuebles.get(position);
         holder.tvTitulo.setText(inmueble.getTitulo());
-        holder.tvDetalles.setText(inmueble.getTipoOperacion() + " - " + inmueble.getCiudad());
-        holder.tvPrecio.setText("$ " + inmueble.getPrecio());
+        String ciudad = inmueble.getCiudad();
+        if (ciudad == null || ciudad.trim().isEmpty()) {
+            holder.tvDetalles.setText(inmueble.getTipoOperacion());
+        } else {
+            holder.tvDetalles.setText(inmueble.getTipoOperacion() + " - " + ciudad);
+        }
+
+        java.text.NumberFormat nf = java.text.NumberFormat.getNumberInstance(new java.util.Locale("es", "AR"));
+        nf.setMaximumFractionDigits(0);
+        holder.tvPrecio.setText("$ " + nf.format(inmueble.getPrecio()));
     }
 
     @Override
