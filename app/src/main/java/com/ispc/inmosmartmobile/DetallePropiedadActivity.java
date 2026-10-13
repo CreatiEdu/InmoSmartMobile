@@ -6,10 +6,18 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetallePropiedadActivity extends AppCompatActivity {
 
@@ -27,25 +35,56 @@ public class DetallePropiedadActivity extends AppCompatActivity {
         tvSuperficie = findViewById(R.id.tvSuperficie);
         tvRequisitos = findViewById(R.id.tvRequisitos);
 
-        int propiedadId = getIntent().getIntExtra("propiedad_id", 1);
+        int propiedadId = getIntent().getIntExtra("propiedad_id", -1);
+        if (propiedadId == -1) {
+            Toast.makeText(this, "Propiedad no válida", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-        List<Integer> imagenesPrueba = new ArrayList<>();
-        imagenesPrueba.add(android.R.drawable.ic_menu_gallery);
-        imagenesPrueba.add(android.R.drawable.ic_menu_gallery);
-        imagenesPrueba.add(android.R.drawable.ic_menu_gallery);
-
-        SliderAdapter adapter = new SliderAdapter(imagenesPrueba);
         rvCarrusel.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvCarrusel.setAdapter(adapter);
         new PagerSnapHelper().attachToRecyclerView(rvCarrusel);
 
-        tvPrecio.setText("$ 150.000");
-        tvDescripcion.setText("Descripción de ejemplo de la propiedad " + propiedadId + ".");
-        tvSuperficie.setText("120 m²");
-        tvRequisitos.setText("Garantía propietaria, recibo de sueldo x3.");
+        cargarDetalle(propiedadId);
+    }
 
-        // TODO: cuando esté el endpoint real, reemplazar los datos de prueba
-        // de arriba por una llamada a ApiService, algo como:
-        // ApiClient.getApiService().getPropiedad(propiedadId).enqueue(...)
+    private void cargarDetalle(int id) {
+        RetrofitClient.getApi().getDetalle(id).enqueue(new Callback<PropiedadDetalle>() {
+            @Override
+            public void onResponse(Call<PropiedadDetalle> call, Response<PropiedadDetalle> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    Toast.makeText(DetallePropiedadActivity.this,
+                            "Error API: " + response.code(), Toast.LENGTH_LONG).show();
+                    return;
+                }
+                mostrar(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PropiedadDetalle> call, Throwable t) {
+                Toast.makeText(DetallePropiedadActivity.this,
+                        "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void mostrar(PropiedadDetalle p) {
+        NumberFormat nf = NumberFormat.getNumberInstance(new Locale("es", "AR"));
+        nf.setMaximumFractionDigits(0);
+        tvPrecio.setText("$ " + nf.format(p.getPrecio()));
+
+        tvDescripcion.setText(p.getDescripcion());
+        tvSuperficie.setText(p.getSuperficie() + " m²");
+        tvRequisitos.setText(p.getHabitaciones() + " habitaciones, "
+                + p.getBanios() + " baños. "
+                + (p.isAceptaMascotas() ? "Acepta mascotas." : "No acepta mascotas."));
+
+        List<String> imagenes = p.getImagenes() != null ? p.getImagenes() : new ArrayList<>();
+        if (imagenes.isEmpty()) {
+            rvCarrusel.setVisibility(View.GONE);
+        } else {
+            rvCarrusel.setVisibility(View.VISIBLE);
+            rvCarrusel.setAdapter(new UrlSliderAdapter(imagenes));
+        }
     }
 }
