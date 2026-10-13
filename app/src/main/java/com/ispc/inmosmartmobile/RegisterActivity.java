@@ -113,7 +113,11 @@ public class RegisterActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         // Si la respuesta no es JSON, queda el mensaje genérico con el código
                     }
-                    Toast.makeText(RegisterActivity.this, mensaje, Toast.LENGTH_LONG).show();
+                    new androidx.appcompat.app.AlertDialog.Builder(RegisterActivity.this)
+                            .setTitle("No se pudo registrar")
+                            .setMessage(mensaje)
+                            .setPositiveButton("Entendido", null)
+                            .show();
                 }
             }
 
