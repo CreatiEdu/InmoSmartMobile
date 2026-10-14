@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#F8F9FA"
     android:fillViewport="true">
 
     <LinearLayout
@@ -38,92 +39,153 @@
             android:paddingEnd="20dp"
             android:paddingBottom="30dp">
 
-            <!-- CARRUSEL DE FOTOS -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCarrusel"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:orientation="horizontal" />
+                android:layout_height="220dp">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                <!-- CARRUSEL DE FOTOS -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCarrusel"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:orientation="horizontal" />
+                <!--Boton favorito-->
 
-            <!-- PRECIO -->
-            <TextView
-                android:id="@+id/tvPrecio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="$ 0"
-                android:textColor="@color/inmosmart_blue"
-                android:textSize="26sp"
-                android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnFavoritoDetalle"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/favorite"
+                    android:contentDescription="Agregar a favoritos"
+                    android:padding="10dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="16dp" />
-
-            <!-- DESCRIPCION -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textColor="@color/text_dark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="..."
-                android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+            </FrameLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="16dp" />
 
-            <!-- SUPERFICIE -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Superficie"
-                android:textColor="@color/text_dark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSuperficie"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="..."
-                android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                android:layout_marginBottom="16dp"
+                android:background="#FFFFFF"
+                android:elevation="2dp"
+                android:padding="16dp"
+                android:orientation="vertical">
 
-            <View
+                <!-- PRECIO -->
+                <TextView
+                    android:id="@+id/tvPrecio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$ 0"
+                    android:textColor="@color/inmosmart_blue"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <!-- DESCRIPCION -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="..."
+                    android:textColor="@color/text_dark"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp" />
+
+                <!-- SUPERFICIE -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Superficie"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSuperficie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="..."
+                    android:textColor="@color/text_dark"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp" />
+
+                <!-- Detalles -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Detalles"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRequisitos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="..."
+                    android:textColor="@color/text_dark"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <!-- BOTONES DE ACCIÓN (Turno y Mensaje) -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="16dp" />
-
-            <!-- REQUISITOS -->
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Requisitos"
-                android:textColor="@color/text_dark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvRequisitos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="..."
-                android:textColor="@color/text_dark"
-                android:textSize="15sp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAgendarTurno"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Agendar Visita"
+                    android:backgroundTint="@color/inmosmart_blue"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="12dp"
+                    android:textSize="16sp"
+                    app:cornerRadius="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp" />
+
+                <Button
+                    android:id="@+id/btnEnviarMensaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:backgroundTint="@color/inmosmart_blue"
+                    android:text="Consultar por Mensaje"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

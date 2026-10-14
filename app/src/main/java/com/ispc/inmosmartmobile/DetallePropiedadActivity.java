@@ -5,13 +5,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,41 +25,84 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetallePropiedadActivity extends AppCompatActivity {
-
+    private Button btnFavoritoDetalle, btnAgendarTurno;
     private RecyclerView rvCarrusel;
     private TextView tvPrecio, tvDescripcion, tvSuperficie, tvRequisitos;
+
+    private boolean esFavorito = false;
+    private int propiedadId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_propiedad);
 
+        // Enlazar componentes
+        btnFavoritoDetalle = findViewById(R.id.btnFavoritoDetalle);
+        btnAgendarTurno = findViewById(R.id.btnAgendarTurno); // Nuevo botón para turnos
         rvCarrusel = findViewById(R.id.rvCarrusel);
         tvPrecio = findViewById(R.id.tvPrecio);
         tvDescripcion = findViewById(R.id.tvDescripcion);
         tvSuperficie = findViewById(R.id.tvSuperficie);
         tvRequisitos = findViewById(R.id.tvRequisitos);
 
-        int propiedadId = getIntent().getIntExtra("propiedad_id", -1);
+        propiedadId = getIntent().getIntExtra("propiedad_id", -1);
         if (propiedadId == -1) {
             Toast.makeText(this, "Propiedad no válida", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
+        // Listener del botón de Favoritos
+        btnFavoritoDetalle.setOnClickListener(v -> {
+            SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
+            String token = prefs.getString("token", null);
+
+            if (token == null || token.isEmpty()) {
+                Toast.makeText(DetallePropiedadActivity.this, "Debes iniciar sesión", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (esFavorito) {
+                quitarFavoritoApi(token, propiedadId);
+            } else {
+                agregarFavoritoApi(token, propiedadId);
+            }
+        });
+
+        // Listener del botón para Agendar Turno / Visita
+        btnAgendarTurno.setOnClickListener(v -> {
+            SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
+            String token = prefs.getString("token", null);
+
+            if (token == null || token.isEmpty()) {
+                Toast.makeText(DetallePropiedadActivity.this, "Debes iniciar sesión para agendar un turno", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mostrarSelectorFechaHora(token, propiedadId);
+        });
+
         rvCarrusel.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         new PagerSnapHelper().attachToRecyclerView(rvCarrusel);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         cargarDetalle(propiedadId);
     }
 
     private void cargarDetalle(int id) {
-        RetrofitClient.getApi().getDetalle(id).enqueue(new Callback<PropiedadDetalle>() {
+        SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
+        String token = prefs.getString("token", null);
+        String authHeader = (token != null && !token.isEmpty()) ? "Bearer " + token : null;
+
+        RetrofitClient.getApi().getDetalle(authHeader, id).enqueue(new Callback<PropiedadDetalle>() {
             @Override
             public void onResponse(Call<PropiedadDetalle> call, Response<PropiedadDetalle> response) {
                 if (!response.isSuccessful() || response.body() == null) {
-                    Toast.makeText(DetallePropiedadActivity.this,
-                            "Error API: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(DetallePropiedadActivity.this, "Error API: " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 mostrar(response.body());
@@ -62,8 +110,84 @@ public class DetallePropiedadActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PropiedadDetalle> call, Throwable t) {
-                Toast.makeText(DetallePropiedadActivity.this,
-                        "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(DetallePropiedadActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void agregarFavoritoApi(String token, int idPropiedad) {
+        AgregarFavoritoRequest request = new AgregarFavoritoRequest(idPropiedad);
+        RetrofitClient.getApi().agregarFavorito("Bearer " + token, request).enqueue(new Callback<FavoritoResponse>() {
+            @Override
+            public void onResponse(Call<FavoritoResponse> call, Response<FavoritoResponse> response) {
+                if (response.isSuccessful()) {
+                    esFavorito = true;
+                    actualizarEstadoBoton();
+                    Toast.makeText(DetallePropiedadActivity.this, "¡Agregado a favoritos!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetallePropiedadActivity.this, "Error al guardar favorito", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoritoResponse> call, Throwable t) {
+                Toast.makeText(DetallePropiedadActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void quitarFavoritoApi(String token, int idPropiedad) {
+        RetrofitClient.getApi().eliminarFavorito("Bearer " + token, idPropiedad).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    esFavorito = false;
+                    actualizarEstadoBoton();
+                    Toast.makeText(DetallePropiedadActivity.this, "Quitado de favoritos", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetallePropiedadActivity.this, "No se pudo quitar de favoritos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(DetallePropiedadActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Selector de Fecha y Hora para los turnos
+    private void mostrarSelectorFechaHora(String token, int idPropiedad) {
+        Calendar calendario = Calendar.getInstance();
+
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
+            new TimePickerDialog(this, (timeView, hourOfDay, minute) -> {
+                String fechaHoraFormateada = String.format(Locale.getDefault(), "%d-%02d-%02d %02d:%02d:00",
+                        year, (month + 1), dayOfMonth, hourOfDay, minute);
+
+                enviarTurnoApi(token, idPropiedad, fechaHoraFormateada);
+
+            }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), true).show();
+
+        }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void enviarTurnoApi(String token, int idPropiedad, String fechaHora) {
+        AgendarTurnoRequest request = new AgendarTurnoRequest(idPropiedad, fechaHora);
+
+        ApiClient.getApiService().agendarTurno("Bearer " + token, request).enqueue(new Callback<TurnoModel>() {
+            @Override
+            public void onResponse(Call<TurnoModel> call, Response<TurnoModel> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(DetallePropiedadActivity.this, "¡Turno agendado con éxito!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(DetallePropiedadActivity.this, "Error al agendar el turno (" + response.code() + ")", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TurnoModel> call, Throwable t) {
+                Toast.makeText(DetallePropiedadActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -79,12 +203,25 @@ public class DetallePropiedadActivity extends AppCompatActivity {
                 + p.getBanios() + " baños. "
                 + (p.isAceptaMascotas() ? "Acepta mascotas." : "No acepta mascotas."));
 
+        esFavorito = p.isEsFavorito();
+        actualizarEstadoBoton();
+
         List<String> imagenes = p.getImagenes() != null ? p.getImagenes() : new ArrayList<>();
         if (imagenes.isEmpty()) {
             rvCarrusel.setVisibility(View.GONE);
         } else {
             rvCarrusel.setVisibility(View.VISIBLE);
             rvCarrusel.setAdapter(new UrlSliderAdapter(imagenes));
+        }
+    }
+
+    private void actualizarEstadoBoton() {
+        if (esFavorito) {
+            btnFavoritoDetalle.setText("Quitar de Favoritos");
+            btnFavoritoDetalle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_filled, 0, 0, 0);
+        } else {
+            btnFavoritoDetalle.setText("Agregar a Favoritos");
+            btnFavoritoDetalle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite, 0, 0, 0);
         }
     }
 }

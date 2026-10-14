@@ -1,5 +1,6 @@
 package com.ispc.inmosmartmobile;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class PropiedadDetalle {
@@ -13,6 +14,10 @@ public class PropiedadDetalle {
     private int banios;
     private double superficie;
     private boolean aceptaMascotas;
+
+    @SerializedName("esFavorito") // Soporta esFavorito
+    private boolean esFavorito;
+
     private List<String> imagenes;
 
     public String getId() { return id; }
@@ -25,5 +30,6 @@ public class PropiedadDetalle {
     public int getBanios() { return banios; }
     public double getSuperficie() { return superficie; }
     public boolean isAceptaMascotas() { return aceptaMascotas; }
+    public boolean isEsFavorito() { return esFavorito; }
     public List<String> getImagenes() { return imagenes; }
 }

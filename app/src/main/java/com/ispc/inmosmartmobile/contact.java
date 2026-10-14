@@ -32,8 +32,8 @@ public class contact extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_contact); // Vincula con tu XML de contacto
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contact); // Vincula con tu XML de contacto
 
         // 1. Enlazar componentes Java con sus ID en el XML
         edtNombre = findViewById(R.id.edtNombre);
@@ -41,6 +41,7 @@ public class contact extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtAsunto = findViewById(R.id.edtAsunto);
         edtMensaje = findViewById(R.id.edtMensaje);
+        btnEnviar = findViewById(R.id.btnEnviar);
         btnEnviar.setOnClickListener(v -> {
             if (!validarFormulario()) return;
 
