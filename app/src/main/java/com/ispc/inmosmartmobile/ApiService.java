@@ -7,6 +7,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.DELETE;
+import retrofit2.http.Path;
+import java.util.List;
 
 public interface ApiService {
 
@@ -25,4 +28,31 @@ public interface ApiService {
 
     @POST("contacto/")
     Call<ResponseBody> enviarContacto(@Body ContactoRequest body);
+
+    @GET("api/mobile/favoritos/")
+    Call<List<FavoritoResponse>> obtenerFavoritos(
+            @Header("Authorization") String token
+    );
+
+    @POST("api/mobile/favoritos/")
+    Call<FavoritoResponse> agregarFavorito(
+            @Header("Authorization") String token,
+            @Body AgregarFavoritoRequest request
+    );
+
+    @DELETE("api/mobile/favoritos/{id_propiedad}/")
+    Call<Void> eliminarFavorito(
+            @Header("Authorization") String token,
+            @Path("id_propiedad") int idPropiedad
+    );
+
+    @GET("mobile/turnos/")
+    Call<List<TurnoModel>> obtenerTurnos(@Header("Authorization") String token);
+
+    @POST("mobile/turnos/")
+    Call<TurnoModel> agendarTurno(@Header("Authorization") String token, @Body AgendarTurnoRequest request);
+
+    @DELETE("mobile/turnos/{id}/")
+    Call<Void> cancelarTurno(@Header("Authorization") String token, @Path("id") int idTurno);
 }
+

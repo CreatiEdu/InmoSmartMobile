@@ -10,24 +10,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="32dp"
+        android:padding="24dp"
         android:background="@drawable/fondo_abstracto">
 
         <!-- Logo -->
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/logo"
             android:contentDescription="Logo de la app"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="24dp"
             android:text="Mi Perfil"
             android:textColor="@color/white"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <!-- Usuario -->
@@ -37,17 +37,18 @@
             android:layout_marginBottom="4dp"
             android:text="Nombre de usuario"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvUsuario"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/input_fondo"
             android:gravity="center_vertical"
-            android:padding="16dp"
-            android:textColor="@color/texto_principal" />
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/texto_principal"
+            android:textSize="15sp" />
 
         <!-- DNI -->
         <TextView
@@ -56,36 +57,38 @@
             android:layout_marginBottom="4dp"
             android:text="DNI"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvDni"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/input_fondo"
             android:gravity="center_vertical"
-            android:padding="16dp"
-            android:textColor="@color/texto_principal" />
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/texto_principal"
+            android:textSize="15sp" />
 
         <!-- Email -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="Correo Electronico"
+            android:text="Correo Electrónico"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/input_fondo"
             android:gravity="center_vertical"
-            android:padding="16dp"
-            android:textColor="@color/texto_principal" />
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/texto_principal"
+            android:textSize="15sp" />
 
         <!-- Teléfono -->
         <TextView
@@ -94,23 +97,35 @@
             android:layout_marginBottom="4dp"
             android:text="Teléfono"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvTelefono"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/input_fondo"
             android:gravity="center_vertical"
-            android:padding="16dp"
-            android:textColor="@color/texto_principal" />
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/texto_principal"
+            android:textSize="15sp" />
 
-        <!-- Botones en horizontal -->
+        <!-- Botón para ir a Mis Turnos -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMisTurnos"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/boton_redondeado"
+            android:text=" Ver Mis Turnos"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Botones inferiores en horizontal -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton

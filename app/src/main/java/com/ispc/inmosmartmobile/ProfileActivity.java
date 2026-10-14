@@ -36,6 +36,12 @@ public class ProfileActivity extends AppCompatActivity {
         btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
         btnVolver = findViewById(R.id.btnVolver);
 
+        AppCompatButton btnMisTurnos = findViewById(R.id.btnMisTurnos);
+        btnMisTurnos.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, MisTurnosActivity.class);
+            startActivity(intent);
+        });
+
         // Ir a editar perfil
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override

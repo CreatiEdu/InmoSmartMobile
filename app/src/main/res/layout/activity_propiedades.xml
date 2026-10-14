@@ -63,7 +63,8 @@
                 android:id="@+id/spinnerTipo"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:backgroundTint="@color/border_gray" />
+                android:backgroundTint="@color/border_gray"
+                android:popupBackground="@color/white"/>
 
             <View
                 android:layout_width="match_parent"
@@ -75,6 +76,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:hint="Ciudad (ej. Córdoba)"
+                android:textColor="@color/text_dark"
+                android:textColorHint="#757575"
                 android:inputType="text"
                 android:paddingStart="14dp"
                 android:textSize="15sp" />
@@ -89,6 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:hint="Precio Máximo ($)"
+                android:textColor="@color/text_dark"
+                android:textColorHint="#757575"
                 android:inputType="numberDecimal"
                 android:paddingStart="14dp"
                 android:textSize="15sp" />
