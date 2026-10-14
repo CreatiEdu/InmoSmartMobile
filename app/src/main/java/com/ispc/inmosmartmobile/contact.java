@@ -41,6 +41,7 @@ public class contact extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtAsunto = findViewById(R.id.edtAsunto);
         edtMensaje = findViewById(R.id.edtMensaje);
+        btnEnviar = findViewById(R.id.btnEnviar);
         btnEnviar.setOnClickListener(v -> {
             if (!validarFormulario()) return;
 
