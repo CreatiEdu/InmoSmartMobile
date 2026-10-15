@@ -20,11 +20,17 @@
     <color name="azul_primario">#2196F3</color>
     <color name="azul_presionado">#1976D2</color>
     <color name="gris_fondo_input">#F4F6F9</color>
-    <color name="gris_borde_inmput">#CBDSE1</color>
+    <color name="gris_borde_input">#CBD5E1</color>
     <color name="texto_principal">#334155</color>
 
-</resources>
+    <!-- Agregados para la pantalla de inicio (home) -->
+    <color name="texto_terciario">#888888</color>
+    <color name="texto_tarjeta">#333333</color>
+    <color name="texto_banner">#222222</color>
+    <color name="footer_texto">#B0BEC5</color>
+    <color name="footer_texto_claro">#78909C</color>
 
+</resources>
 
 
 

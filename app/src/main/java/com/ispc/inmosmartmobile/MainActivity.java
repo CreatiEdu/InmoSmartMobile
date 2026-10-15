@@ -2,17 +2,37 @@ package com.ispc.inmosmartmobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvBannerSaludo;
+    private TextView tvUsuarioBienvenido;
+    private TextView tvInicialUsuario;
     private BottomNavigationView bottomNavigation;
+    private ViewPager2 viewPagerCarrusel;
+    private TabLayout tabIndicator;
+    private Handler carruselHandler;
+    private Runnable carruselRunnable;
+
+    // Vistas de Búsqueda y Categorías
+    private CardView cardSearch;
+    private CardView cardCasas;
+    private CardView cardLotes;
+    private CardView cardAlquileres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +41,91 @@ public class MainActivity extends AppCompatActivity {
 
         // Enlaza componentes con los ID del XML
         tvBannerSaludo = findViewById(R.id.tvBannerSaludo);
+        tvUsuarioBienvenido = findViewById(R.id.tvUsuarioBienvenido);
+        tvInicialUsuario = findViewById(R.id.tvInicialUsuario);
         bottomNavigation = findViewById(R.id.bottomNavigation);
+        viewPagerCarrusel = findViewById(R.id.viewPagerCarrusel);
+        tabIndicator = findViewById(R.id.tabIndicator);
+
+        // Enlazar Tarjetas
+        cardSearch = findViewById(R.id.cardSearch);
+        cardCasas = findViewById(R.id.cardCasas);
+        cardLotes = findViewById(R.id.cardLotes);
+        cardAlquileres = findViewById(R.id.cardAlquileres);
+
+        // Configuración del carrusel con imágenes
+        List<Integer> imagenesCarrusel = new ArrayList<>();
+        imagenesCarrusel.add(R.drawable.casa5);
+        imagenesCarrusel.add(R.drawable.casa1);
+        imagenesCarrusel.add(R.drawable.casa2);
+        imagenesCarrusel.add(R.drawable.casa4);
+
+        viewPagerCarrusel.setAdapter(new SliderAdapter(imagenesCarrusel));
+
+        // Conecta el indicador de puntos con el carrusel
+        new TabLayoutMediator(tabIndicator, viewPagerCarrusel, (tab, position) -> {
+        }).attach();
+
+        iniciarAutoScroll(imagenesCarrusel.size());
 
         // Recibimos los datos enviados desde LoginActivity
         String usuario = getIntent().getStringExtra("Extra_USUARIO");
-        boolean mostrarBienvenida = getIntent().getBooleanExtra("MOSTRAR_BIENVENIDA", false);
 
-        if (mostrarBienvenida && usuario != null) {
-            // Mensaje rápido emergente (Toast)
-            Toast.makeText(this, "¡Bienvenido/a, " + usuario + "!", Toast.LENGTH_LONG).show();
+        if (usuario != null && !usuario.trim().isEmpty()) {
+            tvUsuarioBienvenido.setText("¡Hola, " + usuario + "!");
+            // Círculo con la inicial del usuario
+            tvInicialUsuario.setText(usuario.trim().substring(0, 1).toUpperCase());
+        } else {
+            tvUsuarioBienvenido.setText("¡Bienvenido/a!");
+            tvInicialUsuario.setText("?");
+        }
+
+        // Clic en el círculo con la inicial: abre el perfil
+        tvInicialUsuario.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
+
+        // --- CLICS DE BÚSQUEDA Y OPCIONES ---
+
+        // Clic en la barra de búsqueda rápida
+        if (cardSearch != null) {
+            cardSearch.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ActivityPropiedades.class);
+                startActivity(intent);
+            });
+        }
+
+        // Clic en tarjeta "Casas en venta"
+        if (cardCasas != null) {
+            cardCasas.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ActivityPropiedades.class);
+                intent.putExtra("CATEGORIA", "Casas");
+                startActivity(intent);
+            });
+        }
+
+        // Clic en tarjeta "Lotes y terrenos"
+        if (cardLotes != null) {
+            cardLotes.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ActivityPropiedades.class);
+                intent.putExtra("CATEGORIA", "Lotes");
+                startActivity(intent);
+            });
+        }
+
+        // Clic en tarjeta "Alquileres"
+        if (cardAlquileres != null) {
+            cardAlquileres.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ActivityPropiedades.class);
+                intent.putExtra("CATEGORIA", "Alquileres");
+                startActivity(intent);
+            });
+        }
+
+        // Botón "Escribinos" del footer: abre la pantalla de contacto
+        View btnEscribinos = findViewById(R.id.btnEscribinos);
+        if (btnEscribinos != null) {
+            btnEscribinos.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, contact.class)));
         }
 
         // Configuración de clics en el menú inferior
@@ -37,19 +133,16 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_contacto) {
-                // Abre la pantalla de Contacto
                 Intent intent = new Intent(MainActivity.this, contact.class);
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.nav_buscar) {
-                // Lógica de búsqueda
                 Intent intent = new Intent(MainActivity.this, ActivityPropiedades.class);
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.nav_menu) {
                 return true;
             } else if (itemId == R.id.nav_mas) {
-                // Muestra el menú de los 3 puntos sobre el ícono "Más"
                 View viewMas = bottomNavigation.findViewById(R.id.nav_mas);
                 mostrarMenuDesplegable(viewMas != null ? viewMas : bottomNavigation);
                 return true;
@@ -57,6 +150,28 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    // Hace que el carrusel avance solo cada 3 segundos
+    private void iniciarAutoScroll(int cantidadImagenes) {
+        carruselHandler = new Handler();
+        carruselRunnable = new Runnable() {
+            @Override
+            public void run() {
+                int siguiente = (viewPagerCarrusel.getCurrentItem() + 1) % cantidadImagenes;
+                viewPagerCarrusel.setCurrentItem(siguiente, true);
+                carruselHandler.postDelayed(this, 3000);
+            }
+        };
+        carruselHandler.postDelayed(carruselRunnable, 3000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (carruselHandler != null && carruselRunnable != null) {
+            carruselHandler.removeCallbacks(carruselRunnable);
+        }
     }
 
     // Método que despliega las opciones del menú emergente
@@ -68,10 +183,17 @@ public class MainActivity extends AppCompatActivity {
             int itemId = menuItem.getItemId();
 
             if (itemId == R.id.sub_nosotros) {
-                // Prueba para verificar que entra al clic
-                Toast.makeText(MainActivity.this, "Clic en Quiénes Somos", Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(MainActivity.this, QuienesSomosActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            if (itemId == R.id.sub_perfil) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            if (itemId == R.id.sub_favoritos) {
+                Intent intent = new Intent(MainActivity.this, FavoritosActivity.class);
                 startActivity(intent);
                 return true;
             }

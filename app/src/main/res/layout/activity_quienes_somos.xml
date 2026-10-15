@@ -1,300 +1,692 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- ENCABEZADO (fijo, no se desplaza) -->
+    <include layout="@layout/include_header" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="¿Quiénes Somos?"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="12dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Somos una inmobiliaria ubicada en Río Cuarto, Córdoba. Nos dedicamos a conectar personas con la propiedad ideal, ya sea para alquilar o comprar."
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginBottom="24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Misión"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Brindar un servicio inmobiliario transparente, ágil y personalizado para cada cliente de Río Cuarto y la región."
-            android:textSize="15sp"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Visión"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ser la inmobiliaria de referencia en el sur de Córdoba, destacándonos por la confianza y el trato cercano con nuestros clientes."
-            android:textSize="15sp"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Valores"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="• Honestidad&#10;• Compromiso&#10;• Transparencia&#10;• Cercanía"
-            android:textSize="15sp"
-            android:layout_marginBottom="24dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nuestro Equipo"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Integrante 1 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/equipo_1"
-                android:scaleType="centerCrop" />
+            <!-- HERO: Quiénes Somos -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Imagen institucional"
+                    android:src="@drawable/casa6" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/overlay_hero" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¿QUIÉNES SOMOS?"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02"
+                        android:gravity="center"
+                        android:layout_marginBottom="10dp" />
+
+                    <View
+                        android:layout_width="32dp"
+                        android:layout_height="2dp"
+                        android:background="#5B86E5"
+                        android:layout_marginBottom="14dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Somos una inmobiliaria sede en Córdoba Capital y próximamente contaremos con una sucursal en Río Cuarto. Nos dedicamos a conectar personas con la propiedad ideal, ya sea para alquilar o comprar."
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:alpha="0.92" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- Resto del contenido -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="16dp">
+                android:padding="24dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- MISIÓN (tarjeta) -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Alejandro Gariglio"
-                    android:textSize="17sp"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <!-- Círculo con el ícono -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardBackgroundColor="#E3F0FC"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:importantForAccessibility="no"
+                                android:text="🎯"
+                                android:textSize="18sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Título y texto -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Misión"
+                                android:textColor="@color/button_blue"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="Brindar un servicio inmobiliario transparente, ágil y personalizado para cada cliente en el proceso de encontrar la propiedad que mejor adapte a sus necesidades ya sea pra comprar, vender o alquilar."
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- VISIÓN (tarjeta) -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <!-- Círculo con el ícono -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardBackgroundColor="#E3F0FC"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:importantForAccessibility="no"
+                                android:text="🔭"
+                                android:textSize="18sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Título y texto -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Visión"
+                                android:textColor="@color/button_blue"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="Consolidarnos como una inmobiliaria de referencia en Córdoba y la región, reconocida por la confianza, el profesionalismo y la atención cercana, brindando soluciones inmobiliarias que acompañen a nuestros clientes en cada etapa de sus proyectos"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- VALORES (tarjeta con chips) -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Valores"
+                            android:textColor="@color/button_blue"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacing="8dp">
+
+                            <com.google.android.material.chip.Chip
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="false"
+                                android:clickable="false"
+                                android:text="Honestidad"
+                                android:textColor="#0D47A1"
+                                android:textSize="13sp"
+                                app:chipBackgroundColor="#E3F0FC"
+                                app:chipStrokeWidth="0dp"
+                                app:rippleColor="@android:color/transparent" />
+
+                            <com.google.android.material.chip.Chip
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="false"
+                                android:clickable="false"
+                                android:text="Compromiso"
+                                android:textColor="#0D47A1"
+                                android:textSize="13sp"
+                                app:chipBackgroundColor="#E3F0FC"
+                                app:chipStrokeWidth="0dp"
+                                app:rippleColor="@android:color/transparent" />
+
+                            <com.google.android.material.chip.Chip
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="false"
+                                android:clickable="false"
+                                android:text="Transparencia"
+                                android:textColor="#0D47A1"
+                                android:textSize="13sp"
+                                app:chipBackgroundColor="#E3F0FC"
+                                app:chipStrokeWidth="0dp"
+                                app:rippleColor="@android:color/transparent" />
+
+                            <com.google.android.material.chip.Chip
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="false"
+                                android:clickable="false"
+                                android:text="Cercanía"
+                                android:textColor="#0D47A1"
+                                android:textSize="13sp"
+                                app:chipBackgroundColor="#E3F0FC"
+                                app:chipStrokeWidth="0dp"
+                                app:rippleColor="@android:color/transparent" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- NUESTRO EQUIPO -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Nuestro equipo"
+                    android:textColor="@color/button_blue"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@color/button_blue" />
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Agente Inmobiliario"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="Personas reales, trato cercano"
+                    android:textColor="#555555"
                     android:textSize="13sp" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:columnCount="2">
+
+                    <!-- Integrante 1 -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:layout_margin="5dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <!-- Foto circular con borde celeste -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
+                                app:cardBackgroundColor="#E3F0FC"
+                                app:cardCornerRadius="38dp"
+                                app:cardElevation="0dp"
+                                app:contentPadding="2dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:cardCornerRadius="36dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="Alejandro Gariglio"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/equipo_1" />
+                                </androidx.cardview.widget.CardView>
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Alejandro Gariglio"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Agente Inmobiliario"
+                                android:textColor="#555555"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Integrante 2 -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:layout_margin="5dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <!-- Foto circular con borde celeste -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
+                                app:cardBackgroundColor="#E3F0FC"
+                                app:cardCornerRadius="38dp"
+                                app:cardElevation="0dp"
+                                app:contentPadding="2dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:cardCornerRadius="36dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="Dolores Fernández"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/equipo_2" />
+                                </androidx.cardview.widget.CardView>
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Dolores Fernández"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Agente Inmobiliario"
+                                android:textColor="#555555"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Integrante 3 -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:layout_margin="5dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <!-- Foto circular con borde celeste -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
+                                app:cardBackgroundColor="#E3F0FC"
+                                app:cardCornerRadius="38dp"
+                                app:cardElevation="0dp"
+                                app:contentPadding="2dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:cardCornerRadius="36dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="Franco Fernández"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/equipo_3" />
+                                </androidx.cardview.widget.CardView>
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Franco Fernández"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Agente Inmobiliario"
+                                android:textColor="#555555"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Integrante 4 -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:layout_margin="5dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <!-- Foto circular con borde celeste -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
+                                app:cardBackgroundColor="#E3F0FC"
+                                app:cardCornerRadius="38dp"
+                                app:cardElevation="0dp"
+                                app:contentPadding="2dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:cardCornerRadius="36dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="Matías Astrada"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/equipo_4" />
+                                </androidx.cardview.widget.CardView>
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Matías Astrada"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Agente Inmobiliario"
+                                android:textColor="#555555"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Integrante 5 -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:layout_margin="5dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <!-- Foto circular con borde celeste -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
+                                app:cardBackgroundColor="#E3F0FC"
+                                app:cardCornerRadius="38dp"
+                                app:cardElevation="0dp"
+                                app:contentPadding="2dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:cardCornerRadius="36dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="Matias Rodríguez"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/equipo_5" />
+                                </androidx.cardview.widget.CardView>
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Matias Rodríguez"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Agente Inmobiliario"
+                                android:textColor="#555555"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Integrante 6 -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:layout_margin="5dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <!-- Foto circular con borde celeste -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
+                                app:cardBackgroundColor="#E3F0FC"
+                                app:cardCornerRadius="38dp"
+                                app:cardElevation="0dp"
+                                app:contentPadding="2dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:cardCornerRadius="36dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="Michael Farías"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/equipo_6" />
+                                </androidx.cardview.widget.CardView>
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:text="Michael Farías"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Agente Inmobiliario"
+                                android:textColor="#555555"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </GridLayout>
+
+                <!-- BOTÓN DE ACCIÓN: abre la pantalla de contacto -->
+                <Button
+                    android:id="@+id/btnContactanos"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:backgroundTint="@color/button_blue"
+                    android:text="Contáctanos"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
             </LinearLayout>
+
         </LinearLayout>
-
-        <!-- Integrante 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/equipo_2"
-                android:scaleType="centerCrop" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dolores Fernández"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agente Inmobiliario"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Integrante 3 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/equipo_3"
-                android:scaleType="centerCrop" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Franco Fernández"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agente Inmobiliario"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Integrante 4 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/equipo_4"
-                android:scaleType="centerCrop" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Matías Astrada"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agente Inmobiliario"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Integrante 5 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/equipo_5"
-                android:scaleType="centerCrop" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Matias Rodríguez"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agente Inmobiliario"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Integrante 6 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="24dp">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/equipo_6"
-                android:scaleType="centerCrop" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Michael Farías"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agente Inmobiliario"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Volver" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

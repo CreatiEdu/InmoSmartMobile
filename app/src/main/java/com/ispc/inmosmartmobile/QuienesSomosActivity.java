@@ -1,10 +1,11 @@
 package com.ispc.inmosmartmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class QuienesSomosActivity extends AppCompatActivity {
 
@@ -13,13 +14,15 @@ public class QuienesSomosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quienes_somos);
 
-        // Botón para volver a la pantalla anterior
-        Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Cierra esta Activity y vuelve a la anterior
-            }
+        // Flecha de volver del encabezado
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
+
+        // Botón "Contáctanos": abre la pantalla de contacto
+        Button btnContactanos = findViewById(R.id.btnContactanos);
+        btnContactanos.setOnClickListener(v -> {
+            Intent intent = new Intent(QuienesSomosActivity.this, contact.class);
+            startActivity(intent);
         });
     }
 }
