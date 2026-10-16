@@ -49,8 +49,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:orientation="horizontal" />
-                <!--Boton favorito-->
 
+                <!--Boton favorito-->
                 <Button
                     android:id="@+id/btnFavoritoDetalle"
                     android:layout_width="44dp"
