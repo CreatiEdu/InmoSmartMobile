@@ -16,6 +16,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
+import android.animation.ObjectAnimator;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,11 +32,21 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnRegister;
     private TextView reqLongitud, reqMinuscula, reqMayuscula, reqNumero, reqSimbolo, reqCoinciden;
+    private FrameLayout loadingOverlay;
+    private ImageView loadingImage;
+    private ObjectAnimator spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        loadingOverlay = findViewById(R.id.loadingOverlay);
+        loadingImage = findViewById(R.id.loadingImage);
+
+        spinner = ObjectAnimator.ofFloat(loadingImage, View.ROTATION, 0f, 360f);
+        spinner.setDuration(1000);
+        spinner.setRepeatCount(ObjectAnimator.INFINITE);
+        spinner.setInterpolator(new LinearInterpolator());
 
         // 1. Enlazar componentes Java con su id XML
         boxUsuario = findViewById(R.id.boxUsuario);
@@ -54,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         TextWatcher watcher = new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
             @Override public void afterTextChanged(Editable s) {
                 actualizarRequisitos();
             }
@@ -61,7 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
         boxPassword.addTextChangedListener(watcher);
         boxPasswordAgain.addTextChangedListener(watcher);
 
+
 // Estado inicial: todo en rojo y botón deshabilitado
+
         actualizarRequisitos();
 
         // Escuchar el evento de click del botón
@@ -106,6 +123,40 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private void showLoading() {
+        loadingOverlay.animate().cancel();
+        loadingOverlay.setAlpha(0f);
+        loadingOverlay.setVisibility(View.VISIBLE);
+        loadingOverlay.animate().alpha(1f).setDuration(200).start();
+        if (!spinner.isStarted()) spinner.start();
+    }
+
+    private void hideLoading() {
+        if (loadingOverlay.getVisibility() != View.VISIBLE) return;
+        loadingOverlay.animate()
+                .alpha(0f)
+                .setDuration(200)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadingOverlay.setVisibility(View.GONE);
+                        spinner.cancel();
+                    }
+                })
+                .start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (loadingOverlay.getVisibility() == View.VISIBLE) return;
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (spinner != null) spinner.cancel();
+    }
     private void actualizarRequisitos() {
         String pass = boxPassword.getText().toString().trim();
         String again = boxPasswordAgain.getText().toString().trim();
@@ -142,6 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void ejecutarRegistro(String usuario, String dni, String email, String password) {
+        showLoading();
         ApiService apiService = ApiClient.getApiService();
         RegisterRequest registerRequest = new RegisterRequest(usuario, dni, email, password);
 
@@ -149,6 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
         call.enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                hideLoading();
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
@@ -183,6 +236,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                hideLoading();
                 Toast.makeText(RegisterActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

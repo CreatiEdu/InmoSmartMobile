@@ -1,5 +1,6 @@
 package com.ispc.inmosmartmobile;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,8 +10,11 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +32,11 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnRegister;
 
+    // --- Pantalla de carga ---
+    private FrameLayout loadingOverlay;
+    private ImageView loadingImage;
+    private ObjectAnimator spinner;
+
     private boolean passwordVisible = false;
 
     @Override
@@ -39,6 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
+
+        // --- Pantalla de carga ---
+        loadingOverlay = findViewById(R.id.loadingOverlay);
+        loadingImage = findViewById(R.id.loadingImage);
+
+        spinner = ObjectAnimator.ofFloat(loadingImage, View.ROTATION, 0f, 360f);
+        spinner.setDuration(1000);
+        spinner.setRepeatCount(ObjectAnimator.INFINITE);
+        spinner.setInterpolator(new LinearInterpolator());
 
         // Ojito para mostrar/ocultar la contraseña
         configurarOjoPassword();
@@ -65,6 +83,46 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    // ---------- Pantalla de carga ----------
+
+    private void showLoading() {
+        loadingOverlay.setAlpha(0f);
+        loadingOverlay.setVisibility(View.VISIBLE);
+        loadingOverlay.animate().alpha(1f).setDuration(200).start();
+        spinner.start();
+    }
+
+    private void hideLoading() {
+        loadingOverlay.animate()
+                .alpha(0f)
+                .setDuration(200)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadingOverlay.setVisibility(View.GONE);
+                        spinner.cancel();
+                    }
+                })
+                .start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Ignora el botón atrás mientras se está cargando
+        if (loadingOverlay.getVisibility() == View.VISIBLE) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (spinner != null) spinner.cancel();
+    }
+
+    // ---------- Ojito de la contraseña ----------
 
     @SuppressLint("ClickableViewAccessibility")
     private void configurarOjoPassword() {
@@ -100,13 +158,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // ---------- Login ----------
+
     private void realizarLogin(String email, String password) {
+        showLoading(); // <-- NUEVO: muestra la pantalla de carga
+
         ApiService apiService = ApiClient.getApiService();
         LoginRequest loginRequest = new LoginRequest(email, password);
 
         apiService.login(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                hideLoading(); // <-- NUEVO: oculta la carga al recibir respuesta
+
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
 
@@ -139,6 +203,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                hideLoading(); // <-- NUEVO: oculta la carga también si falla
+
                 Toast.makeText(LoginActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
