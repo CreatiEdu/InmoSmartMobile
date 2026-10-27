@@ -1,115 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="32dp"
-    android:background="@drawable/fondo_abstracto">
+    android:layout_height="match_parent">
 
-    <!-- Logo -->
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/logo"
-        android:contentDescription="Logo de la app"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView android:text="Registrar Usuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:textColor="@color/white"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-
-    <EditText android:id="@+id/boxUsuario"
-        android:hint="Nombre de usuario"
-        android:inputType="textPersonName"
-
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingStart="16dp"
-        android:padding="16dp"
-        android:background="@drawable/input_fondo"
-        android:textColor="@color/texto_principal"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@drawable/fondo_abstracto">
 
-    <EditText
-        android:id="@+id/boxDni"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp">
+
+            <!-- Logo -->
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/logo"
+                android:contentDescription="Logo de la app"
+                android:layout_marginBottom="0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrar Usuario"
+                android:layout_marginBottom="24dp"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/boxUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:hint="Nombre de usuario"
+                android:inputType="textPersonName"
+                android:textSize="16sp"
+                android:gravity="center_vertical|start"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:background="@drawable/input_fondo"
+                android:textColor="@color/text_dark"
+                android:textColorHint="#757575"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/boxDni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:hint="DNI"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:gravity="center_vertical|start"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:background="@drawable/input_fondo"
+                android:textColor="@color/text_dark"
+                android:textColorHint="#757575"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/boxEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:hint="Correo Electronico"
+                android:inputType="textEmailAddress"
+                android:textSize="16sp"
+                android:gravity="center_vertical|start"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:background="@drawable/input_fondo"
+                android:textColor="@color/text_dark"
+                android:textColorHint="#757575"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Contraseña con ojito -->
+            <EditText
+                android:id="@+id/boxPassword"
+                android:drawableEnd="@drawable/ic_visibility"
+                android:drawablePadding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:textSize="16sp"
+                android:gravity="center_vertical|start"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:background="@drawable/input_fondo"
+                android:textColor="@color/text_dark"
+                android:textColorHint="#757575"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Reingresar Contraseña con ojito -->
+            <EditText
+                android:id="@+id/boxPasswordAgain"
+                android:drawableEnd="@drawable/ic_visibility"
+                android:drawablePadding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:hint="Reingresar Contraseña"
+                android:inputType="textPassword"
+                android:textSize="16sp"
+                android:gravity="center_vertical|start"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:background="@drawable/input_fondo"
+                android:textColor="@color/text_dark"
+                android:textColorHint="#757575"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Requisitos de contraseña -->
+            <TextView
+                android:id="@+id/reqLongitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✗ Mínimo 12 caracteres"
+                android:textColor="@color/req_fail"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/reqMinuscula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✗ Al menos 1 letra minúscula"
+                android:textColor="@color/req_fail"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/reqMayuscula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✗ Al menos 1 letra mayúscula"
+                android:textColor="@color/req_fail"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/reqNumero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✗ Al menos 1 número"
+                android:textColor="@color/req_fail"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/reqSimbolo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✗ Al menos 1 símbolo (ej: ! @ # $ %)"
+                android:textColor="@color/req_fail"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/reqCoinciden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✗ Las contraseñas coinciden"
+                android:textColor="@color/req_fail"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/boton_redondeado"
+                android:text="Registrarse"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="48dp"
+                android:background="@drawable/boton_redondeado"
+                android:text="Iniciar Sesion"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Pantalla de carga -->
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
 
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/input_fondo"
-        android:hint="DNI"
-        android:inputType="number"
-        android:padding="16dp"
-        android:paddingStart="16dp"
-        android:textColor="@color/texto_principal" />
+        <ImageView
+            android:id="@+id/loadingImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:contentDescription="Cargando"
+            android:src="@drawable/logo" />
+    </FrameLayout>
 
-    <EditText android:id="@+id/boxEmail"
-        android:inputType="textEmailAddress"
-        android:hint="Correo Electronico"
-
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingStart="16dp"
-        android:padding="16dp"
-        android:background="@drawable/input_fondo"
-        android:textColor="@color/texto_principal"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText android:id="@+id/boxPassword"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingStart="16dp"
-        android:padding="16dp"
-        android:background="@drawable/input_fondo"
-        android:textColor="@color/texto_principal"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText android:id="@+id/boxPasswordAgain"
-        android:hint="Reingresar Contraseña"
-        android:inputType="textPassword"
-
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingStart="16dp"
-        android:padding="16dp"
-        android:background="@drawable/input_fondo"
-        android:textColor="@color/texto_principal"
-        android:layout_marginBottom="16dp"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRegister"
-
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/boton_redondeado"
-
-        android:text="Registrarse"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogin"
-
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="48dp"
-        android:background="@drawable/boton_redondeado"
-        android:text="Iniciar Sesion"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-</LinearLayout>
+</FrameLayout>

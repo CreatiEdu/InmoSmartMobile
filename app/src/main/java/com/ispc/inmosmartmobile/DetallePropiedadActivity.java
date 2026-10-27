@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.widget.CalendarView;
+import android.widget.Spinner;
+import android.view.LayoutInflater;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetallePropiedadActivity extends AppCompatActivity {
-    private Button btnFavoritoDetalle, btnAgendarTurno;
+    private Button btnFavoritoDetalle, btnAgendarTurno, btnEnviarMensaje;
     private RecyclerView rvCarrusel;
     private TextView tvPrecio, tvDescripcion, tvSuperficie, tvRequisitos;
 
@@ -39,7 +41,8 @@ public class DetallePropiedadActivity extends AppCompatActivity {
 
         // Enlazar componentes
         btnFavoritoDetalle = findViewById(R.id.btnFavoritoDetalle);
-        btnAgendarTurno = findViewById(R.id.btnAgendarTurno); // Nuevo botón para turnos
+        btnAgendarTurno = findViewById(R.id.btnAgendarTurno);
+        btnEnviarMensaje = findViewById(R.id.btnEnviarMensaje);
         rvCarrusel = findViewById(R.id.rvCarrusel);
         tvPrecio = findViewById(R.id.tvPrecio);
         tvDescripcion = findViewById(R.id.tvDescripcion);
@@ -53,10 +56,8 @@ public class DetallePropiedadActivity extends AppCompatActivity {
             return;
         }
 
-        // Listener del botón de Favoritos
         btnFavoritoDetalle.setOnClickListener(v -> {
-            SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-            String token = prefs.getString("token", null);
+            String token = TokenStorage.getToken(this);
 
             if (token == null || token.isEmpty()) {
                 Toast.makeText(DetallePropiedadActivity.this, "Debes iniciar sesión", Toast.LENGTH_SHORT).show();
@@ -70,10 +71,14 @@ public class DetallePropiedadActivity extends AppCompatActivity {
             }
         });
 
-        // Listener del botón para Agendar Turno / Visita
+        btnEnviarMensaje.setOnClickListener(v -> {
+            Intent intent = new Intent(DetallePropiedadActivity.this, contact.class);
+            startActivity(intent);
+        });
+
+        // Listener del botón para Agendar Turno
         btnAgendarTurno.setOnClickListener(v -> {
-            SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-            String token = prefs.getString("token", null);
+            String token = TokenStorage.getToken(this);
 
             if (token == null || token.isEmpty()) {
                 Toast.makeText(DetallePropiedadActivity.this, "Debes iniciar sesión para agendar un turno", Toast.LENGTH_SHORT).show();
@@ -94,8 +99,7 @@ public class DetallePropiedadActivity extends AppCompatActivity {
     }
 
     private void cargarDetalle(int id) {
-        SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-        String token = prefs.getString("token", null);
+        String token = TokenStorage.getToken(this);
         String authHeader = (token != null && !token.isEmpty()) ? "Bearer " + token : null;
 
         RetrofitClient.getApi().getDetalle(authHeader, id).enqueue(new Callback<PropiedadDetalle>() {
@@ -156,20 +160,47 @@ public class DetallePropiedadActivity extends AppCompatActivity {
         });
     }
 
-    // Selector de Fecha y Hora para los turnos
     private void mostrarSelectorFechaHora(String token, int idPropiedad) {
-        Calendar calendario = Calendar.getInstance();
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_agendar_turno, null);
 
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-            new TimePickerDialog(this, (timeView, hourOfDay, minute) -> {
-                String fechaHoraFormateada = String.format(Locale.getDefault(), "%d-%02d-%02d %02d:%02d:00",
-                        year, (month + 1), dayOfMonth, hourOfDay, minute);
+        CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
+        Spinner spinnerHoras = dialogView.findViewById(R.id.spinnerHoras);
+        Button btnConfirmar = dialogView.findViewById(R.id.btnConfirmarDialogo);
+        Button btnCancelar = dialogView.findViewById(R.id.btnCancelarDialogo);
 
-                enviarTurnoApi(token, idPropiedad, fechaHoraFormateada);
 
-            }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), true).show();
+        String[] horasDisponibles = {"10:00", "11:30", "14:00", "15:30", "17:00"};
+        android.widget.ArrayAdapter<String> adapterHoras = new android.widget.ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_dropdown_item, horasDisponibles);
+        spinnerHoras.setAdapter(adapterHoras);
 
-        }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show();
+        final Calendar calendarSeleccionado = Calendar.getInstance();
+
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            calendarSeleccionado.set(year, month, dayOfMonth);
+        });
+
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setView(dialogView)
+                .create();
+
+        btnConfirmar.setOnClickListener(v -> {
+            int year = calendarSeleccionado.get(Calendar.YEAR);
+            int month = calendarSeleccionado.get(Calendar.MONTH) + 1;
+            int day = calendarSeleccionado.get(Calendar.DAY_OF_MONTH);
+
+            String horaSeleccionada = spinnerHoras.getSelectedItem().toString();
+
+            String fechaHoraFormateada = String.format(Locale.getDefault(), "%d-%02d-%02d %s:00",
+                    year, month, day, horaSeleccionada);
+
+            dialog.dismiss();
+            enviarTurnoApi(token, idPropiedad, fechaHoraFormateada);
+        });
+
+        btnCancelar.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
     private void enviarTurnoApi(String token, int idPropiedad, String fechaHora) {

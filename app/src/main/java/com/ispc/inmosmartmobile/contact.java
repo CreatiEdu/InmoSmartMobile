@@ -35,6 +35,15 @@ public class contact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact); // Vincula con tu XML de contacto
 
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false); 
+        }
+
+        toolbar.setNavigationOnClickListener(v -> finish());
+
         // 1. Enlazar componentes Java con sus ID en el XML
         edtNombre = findViewById(R.id.edtNombre);
         edtTelefono = findViewById(R.id.edtTelefono);

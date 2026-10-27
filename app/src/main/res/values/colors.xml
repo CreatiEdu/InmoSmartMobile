@@ -21,7 +21,7 @@
     <color name="azul_presionado">#1976D2</color>
     <color name="gris_fondo_input">#F4F6F9</color>
     <color name="gris_borde_input">#CBD5E1</color>
-    <color name="texto_principal">#334155</color>
+    <color name="texto_principal">#202124</color>
 
     <!-- Agregados para la pantalla de inicio (home) -->
     <color name="texto_terciario">#888888</color>
@@ -29,6 +29,11 @@
     <color name="texto_banner">#222222</color>
     <color name="footer_texto">#B0BEC5</color>
     <color name="footer_texto_claro">#78909C</color>
+
+
+    <!-- Agregados para la pantalla de Registro (para la confirmacion de criterios) -->
+    <color name="req_ok">#4CAF50</color>
+    <color name="req_fail">#FF5252</color>
 
 </resources>
 

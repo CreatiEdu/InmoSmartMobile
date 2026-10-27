@@ -34,6 +34,9 @@ public interface ApiService {
             @Header("Authorization") String token
     );
 
+    @POST("baja/")
+    Call<Void> darDeBaja(@Header("Authorization") String token);
+
     @POST("api/mobile/favoritos/")
     Call<FavoritoResponse> agregarFavorito(
             @Header("Authorization") String token,
