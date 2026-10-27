@@ -35,13 +35,19 @@
         android:id="@+id/etUsuario"
 
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
 
         android:hint="Correo Electronico"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
+        android:textSize="16sp"
+        android:gravity="center_vertical|start"
+        android:maxLines="1"
 
         android:paddingStart="16dp"
-        android:padding="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
 
         android:background="@drawable/input_fondo"
         android:textColor="@color/text_dark"
@@ -56,13 +62,19 @@
         android:drawablePadding="8dp"
 
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
 
         android:hint="Contraseña"
         android:inputType="textPassword"
+        android:textSize="16sp"
+        android:gravity="center_vertical|start"
+        android:maxLines="1"
 
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
 
         android:background="@drawable/input_fondo"
         android:textColor="@color/text_dark"
