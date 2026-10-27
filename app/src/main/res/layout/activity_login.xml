@@ -4,7 +4,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,25 +34,26 @@
             android:layout_marginBottom="32dp"/>
 
         <!-- Campo de usuario -->
+
+        <!-- Campo de contraseña -->
         <EditText
             android:id="@+id/etUsuario"
 
             android:layout_width="match_parent"
             android:layout_height="50dp"
 
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/input_fondo"
+
             android:hint="Correo Electronico"
             android:inputType="textPersonName"
 
             android:paddingStart="16dp"
-            android:padding="16dp"
-
-            android:background="@drawable/input_fondo"
+            android:paddingEnd="16dp"
             android:textColor="@color/text_dark"
-            android:textColorHint="#757575"
 
-            android:layout_marginBottom="16dp"/>
+            android:textColorHint="#757575" />
 
-        <!-- Campo de contraseña -->
         <EditText
             android:id="@+id/etPassword"
             android:drawableEnd="@drawable/ic_visibility"
