@@ -30,6 +30,11 @@
     <color name="footer_texto">#B0BEC5</color>
     <color name="footer_texto_claro">#78909C</color>
 
+
+    <!-- Agregados para la pantalla de Registro (para la confirmacion de criterios) -->
+    <color name="req_ok">#4CAF50</color>
+    <color name="req_fail">#FF5252</color>
+
 </resources>
 
 

@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fillViewport="true"
+android:orientation="vertical"
+android:gravity="center"
+android:padding="32dp"
+android:background="@drawable/fondo_abstracto">
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="32dp"
-    android:background="@drawable/fondo_abstracto">
+    android:padding="32dp">
 
     <!-- Logo -->
     <ImageView
@@ -14,12 +22,12 @@
         android:layout_height="120dp"
         android:src="@drawable/logo"
         android:contentDescription="Logo de la app"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="0dp"/>
 
     <TextView android:text="Registrar Usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold" />
@@ -85,13 +93,61 @@
         android:textColor="@color/texto_principal"
         android:layout_marginBottom="16dp"/>
 
+    <TextView
+        android:id="@+id/reqLongitud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✗ Mínimo 12 caracteres"
+        android:textColor="@color/req_fail"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/reqMinuscula"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✗ Al menos 1 letra minúscula"
+        android:textColor="@color/req_fail"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/reqMayuscula"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✗ Al menos 1 letra mayúscula"
+        android:textColor="@color/req_fail"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/reqNumero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✗ Al menos 1 número"
+        android:textColor="@color/req_fail"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/reqSimbolo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✗ Al menos 1 símbolo (ej: ! @ # $ %)"
+        android:textColor="@color/req_fail"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/reqCoinciden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✗ Las contraseñas coinciden"
+        android:textColor="@color/req_fail"
+        android:textSize="14sp" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegister"
 
         android:layout_width="match_parent"
         android:layout_height="50dp"
 
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/boton_redondeado"
 
@@ -113,3 +169,4 @@
         android:textStyle="bold" />
 
 </LinearLayout>
+</ScrollView>

@@ -12,6 +12,10 @@ import com.google.gson.Gson;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText boxPasswordAgain;
     private Button btnLogin;
     private Button btnRegister;
+    private TextView reqLongitud, reqMinuscula, reqMayuscula, reqNumero, reqSimbolo, reqCoinciden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,26 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
+
+        reqLongitud   = findViewById(R.id.reqLongitud);
+        reqMinuscula  = findViewById(R.id.reqMinuscula);
+        reqMayuscula  = findViewById(R.id.reqMayuscula);
+        reqNumero     = findViewById(R.id.reqNumero);
+        reqSimbolo    = findViewById(R.id.reqSimbolo);
+        reqCoinciden  = findViewById(R.id.reqCoinciden);
+
+        TextWatcher watcher = new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                actualizarRequisitos();
+            }
+        };
+        boxPassword.addTextChangedListener(watcher);
+        boxPasswordAgain.addTextChangedListener(watcher);
+
+// Estado inicial: todo en rojo y botón deshabilitado
+        actualizarRequisitos();
 
         // Escuchar el evento de click del botón
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +104,41 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void actualizarRequisitos() {
+        String pass = boxPassword.getText().toString().trim();
+        String again = boxPasswordAgain.getText().toString().trim();
+
+        boolean longitud = pass.length() >= 12;
+        boolean minuscula = false, mayuscula = false, numero = false, simbolo = false;
+
+        for (int i = 0; i < pass.length(); i++) {
+            char c = pass.charAt(i);
+            if (Character.isLowerCase(c)) minuscula = true;
+            else if (Character.isUpperCase(c)) mayuscula = true;
+            else if (Character.isDigit(c)) numero = true;
+            else if (!Character.isWhitespace(c)) simbolo = true;
+        }
+
+        boolean coinciden = !pass.isEmpty() && pass.equals(again);
+
+        setRequisito(reqLongitud,  longitud,  "Mínimo 12 caracteres");
+        setRequisito(reqMinuscula, minuscula, "Al menos 1 letra minúscula");
+        setRequisito(reqMayuscula, mayuscula, "Al menos 1 letra mayúscula");
+        setRequisito(reqNumero,    numero,    "Al menos 1 número");
+        setRequisito(reqSimbolo,   simbolo,   "Al menos 1 símbolo (ej: ! @ # $ %)");
+        setRequisito(reqCoinciden, coinciden, "Las contraseñas coinciden");
+
+        boolean todoOk = longitud && minuscula && mayuscula && numero && simbolo && coinciden;
+        btnRegister.setEnabled(todoOk);
+        btnRegister.setAlpha(todoOk ? 1f : 0.5f);
+    }
+
+    private void setRequisito(TextView tv, boolean cumple, String texto) {
+        tv.setText((cumple ? "✓ " : "✗ ") + texto);
+        tv.setTextColor(ContextCompat.getColor(this,
+                cumple ? R.color.req_ok : R.color.req_fail));
     }
 
     private void ejecutarRegistro(String usuario, String dni, String email, String password) {
