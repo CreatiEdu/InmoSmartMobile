@@ -60,8 +60,7 @@ public class FavoritosActivity extends AppCompatActivity {
     }
 
     private void cargarFavoritoDesdeApi(){
-        SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-        String token = prefs.getString("token", null);
+        String token = TokenStorage.getToken(this);
 
         if (token == null || token.isEmpty()){
             Toast.makeText(this,"Inicia sesión para ver tus favoritos", Toast.LENGTH_SHORT).show();
@@ -107,8 +106,7 @@ public class FavoritosActivity extends AppCompatActivity {
         });
     }
     private void quitarFavoritoApi(int idPropiedad, int position){
-        SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-        String token = prefs.getString("token", null);
+        String token = TokenStorage.getToken(this);
 
         if (token == null) return;
 

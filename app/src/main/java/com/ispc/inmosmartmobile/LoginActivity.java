@@ -111,11 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse loginResponse = response.body();
 
                     // Guardar el token para usarlo en el perfil
-                    SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-                    prefs.edit()
-                            .putString("token", loginResponse.getToken())
-                            .putInt("id", loginResponse.getId())
-                            .apply();
+                    TokenStorage.saveSession(LoginActivity.this, loginResponse.getToken(), loginResponse.getId());
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("Extra_USUARIO", loginResponse.getNombre());
