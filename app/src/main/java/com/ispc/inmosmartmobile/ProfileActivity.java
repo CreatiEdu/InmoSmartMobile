@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -22,6 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView tvTelefono;
     private AppCompatButton btnEditarPerfil;
     private AppCompatButton btnVolver;
+    private AppCompatButton btnDarBaja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvTelefono = findViewById(R.id.tvTelefono);
         btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
         btnVolver = findViewById(R.id.btnVolver);
+        btnDarBaja = findViewById(R.id.btnDarBaja);
 
         AppCompatButton btnMisTurnos = findViewById(R.id.btnMisTurnos);
         btnMisTurnos.setOnClickListener(v -> {
@@ -55,6 +59,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btnDarBaja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarDialogoConfirmacion();
             }
         });
     }
@@ -121,5 +132,45 @@ public class ProfileActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private void mostrarDialogoConfirmacion() {
+        new AlertDialog.Builder(this)
+                .setTitle("Darse de Baja")
+                .setMessage("¿Estas seguro que deseas eliminar tu cuenta? Esta acción no se puede desahacer.")
+                .setPositiveButton("Si, darme de baja", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ejecutarBaja();
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+    private void ejecutarBaja() {
+        SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
+        String token = prefs.getString("token", null);
+
+        if (token == null) {
+            irALogin();
+            return;
+        }
+
+        ApiClient.getApiService().darDeBaja("Bearer " + token).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ProfileActivity.this, "Tu cuenta ha sido dada de baja", Toast.LENGTH_LONG).show();
+                    irALogin();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Error al dar de baja la cuenta", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ProfileActivity.this, "Error de Conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

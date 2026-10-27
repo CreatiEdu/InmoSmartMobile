@@ -15,7 +15,7 @@ public class PropiedadDetalle {
     private double superficie;
     private boolean aceptaMascotas;
 
-    @SerializedName("esFavorito") // Soporta esFavorito
+    @SerializedName("esFavorito")
     private boolean esFavorito;
 
     private List<String> imagenes;

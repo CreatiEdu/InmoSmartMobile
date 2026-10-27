@@ -12,7 +12,6 @@ public class TurnoModel {
     @SerializedName("estado")
     private String estado;
 
-    // Usamos PropiedadDetalle que ya existe en tu proyecto
     @SerializedName("propiedad_detalle")
     private PropiedadDetalle propiedadDetalle;
 
