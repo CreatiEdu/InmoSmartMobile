@@ -57,8 +57,7 @@ public class DetallePropiedadActivity extends AppCompatActivity {
         }
 
         btnFavoritoDetalle.setOnClickListener(v -> {
-            SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-            String token = prefs.getString("token", null);
+            String token = TokenStorage.getToken(this);
 
             if (token == null || token.isEmpty()) {
                 Toast.makeText(DetallePropiedadActivity.this, "Debes iniciar sesión", Toast.LENGTH_SHORT).show();
@@ -79,8 +78,7 @@ public class DetallePropiedadActivity extends AppCompatActivity {
 
         // Listener del botón para Agendar Turno
         btnAgendarTurno.setOnClickListener(v -> {
-            SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-            String token = prefs.getString("token", null);
+            String token = TokenStorage.getToken(this);
 
             if (token == null || token.isEmpty()) {
                 Toast.makeText(DetallePropiedadActivity.this, "Debes iniciar sesión para agendar un turno", Toast.LENGTH_SHORT).show();
@@ -101,8 +99,7 @@ public class DetallePropiedadActivity extends AppCompatActivity {
     }
 
     private void cargarDetalle(int id) {
-        SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-        String token = prefs.getString("token", null);
+        String token = TokenStorage.getToken(this);
         String authHeader = (token != null && !token.isEmpty()) ? "Bearer " + token : null;
 
         RetrofitClient.getApi().getDetalle(authHeader, id).enqueue(new Callback<PropiedadDetalle>() {

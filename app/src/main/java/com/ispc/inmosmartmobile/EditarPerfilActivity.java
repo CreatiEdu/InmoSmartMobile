@@ -41,8 +41,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnGuardar);
         btnCancelar = findViewById(R.id.btnCancelar);
 
-        SharedPreferences prefs = getSharedPreferences("sesion", MODE_PRIVATE);
-        token = prefs.getString("token", null);
+        token =TokenStorage.getToken(this);
 
         if (token == null) {
             irALogin();
@@ -178,7 +177,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     private void irALogin() {
-        getSharedPreferences("sesion", MODE_PRIVATE).edit().remove("token").apply();
+        TokenStorage.clearSession(this);
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
